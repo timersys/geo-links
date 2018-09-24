@@ -1,0 +1,27 @@
+{
+  "name": "timersys/geo-links",
+  "description": "WordPress plugin to make geotargeted links that works with GeotargetingWP API",
+  "homepage": "https://geotargetingwp.com",
+  "keywords": [
+    "wordpress","geo links","geotargeting","geolocation","plugin"
+  ],
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name":"Damian Logghe",
+      "email":"damian@timersys.com",
+      "homepage":"https://timersys.com/"
+    }
+  ],
+  "support"    : {
+    "issues": "https://github.com/timersys/geo-links/issues",
+    "source": "https://github.com/timersys/geo-links"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "type": "wordpress-plugin",
+  "require": {
+    "timersys/geot-functions": "dev-master",
+    "mobiledetect/mobiledetectlib": "^2.8"
+  }
+}
