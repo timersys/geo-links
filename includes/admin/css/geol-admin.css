@@ -1,0 +1,33 @@
+div.geol_border {
+	border: 1px solid #CCCCCC;
+	padding: 0 20px;
+}
+
+a.geol_symbol {
+	border: 1px solid #CCC;
+	border-radius: 20px;
+	text-decoration: none;
+	background-color: #FFF;
+	color: #000;
+	margin: 5px 0;
+    display: block;
+}
+
+a.geol_plus {
+	padding: 0px 4px;
+}
+a.geol_less {
+	padding: 0px 6px;
+}
+
+a.geol_symbol:hover {
+	border: 1px solid #AAA;
+}
+
+input.geol_options {
+	width: 30%;
+}
+
+table.geol_repeater tr#dest_0 td a.geol_less {
+	display: none;
+}
