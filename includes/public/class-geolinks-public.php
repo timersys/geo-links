@@ -22,15 +22,6 @@
 class GeoLinks_Public {
 
 	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private static $plugin_name;
-
-	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
@@ -55,10 +46,9 @@ class GeoLinks_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct() {
 
-		self::$plugin_name	= $plugin_name;
-		self::$version 		= $version;
+		self::$version 		= GEOL_VERSION;
 		self::$geolinks 	= array();
 		self::$detect 		= new Mobile_Detect;
 	}
@@ -158,7 +148,7 @@ class GeoLinks_Public {
 		if( $query->have_posts() ) {
 			while( $query->have_posts() ) { $query->the_post();
 
-				$opts = Geol_Helper::get_options( get_the_ID() );
+				$opts = geol_options( get_the_ID() );
 				self::$geolinks[get_the_ID()] = $opts;
 			}
 		}
