@@ -13,6 +13,9 @@ class GeoLinksCpt {
 		add_filter( 'manage_geol_cpt_posts_columns', [ $this, 'set_custom_cpt_columns' ] );
 		add_action( 'manage_geol_cpt_posts_custom_column', [ $this, 'set_custom_cpt_values' ],10, 2);
 		add_filter( 'wp_insert_post_data', [ $this, 'modify_post_name' ], 10, 2);
+
+		add_action( 'wp_ajax_geol_source', array($this,'validate_source'));
+		add_action( 'wp_ajax_nopriv_geol_source', array($this,'validate_source'));
 	}
 
 	/**
@@ -189,8 +192,11 @@ class GeoLinksCpt {
 		$post = get_post($post_id);
 		$settings = geol_settings();
 
-		// sanitize settings
-		$input['source_slug'] = sanitize_title($opts['source_slug']);
+		if( isset($post->post_name) ) {
+			$source_slug = sanitize_title($opts['source_slug']);
+			$input['source_slug'] = $post->post_name == $source_slug ? $source_slug : $post->post_name;
+		} else
+			$input['source_slug'] = sanitize_title($opts['source_slug']);
 		
 		if( is_array($opts['dest']) && count($opts['dest']) > 0 ) { $i = 0;
 			foreach($opts['dest'] as $data) {
@@ -209,6 +215,10 @@ class GeoLinksCpt {
 		update_post_meta( $post_id, 'geol_options', apply_filters( 'geol/metaboxes/sanitized_options', $input ) );
 	}
 
+	/**
+	 * Modify post_name
+	 * @since 1.0.0
+	 */
 	public function modify_post_name($data, $postarr) {
 
 		if ( !isset( $postarr['geol_options_nonce'] ) ||
@@ -250,6 +260,51 @@ class GeoLinksCpt {
 		$data['post_name'] = wp_unique_post_slug($post_name, $post_id, $post_status, $post_type, $post_parent );
 		
 		return $data;
+	}
+
+
+	/**
+	 * validate source field
+	 * @since 1.0.0
+	 */
+	function validate_source() {
+
+		$ouput = array();
+
+		if( !isset($_POST['slug']) || !isset( $_POST['wpnonce'] ) ||
+			!wp_verify_nonce( $_POST['wpnonce'], 'geol_nonce' )
+		) wp_send_json($ouput);
+
+		global $wpdb;
+
+		$output = array(
+						'type' => 'success',
+						'msg' => __('Source available.'),
+						'icon' => 'dashicons-yes'
+					);
+
+		$source_slug = sanitize_title($_POST['slug']);
+		$meta_key = 'geol_options';
+		$query = 'SELECT post_id, meta_value FROM '.$wpdb->postmeta.' WHERE meta_key = %s';
+
+		$results = $wpdb->get_results($wpdb->prepare($query, $meta_key));
+
+		foreach( $results as $result ) {
+
+			$opts = maybe_unserialize($result->meta_value);
+
+			if( $opts['source_slug'] == $source_slug ) {
+				
+				$output = array(
+								'type' => 'error',
+								'msg' => __('Source in use. Please choose other source'),
+								'icon' => 'dashicons-no'
+							);
+				break;
+			}
+		}
+
+		wp_send_json($output);
 	}
 }
 

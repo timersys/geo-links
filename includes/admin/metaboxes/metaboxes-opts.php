@@ -9,7 +9,8 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
 	<tr valign="top">
 		<th><label for="geol_trigger"><?php _e( 'Link Slug', 'geol' ); ?></label></th>
 		<td id="source">
-			<input type="text" class="widefat" name="geol[source_slug]" value="<?php echo $opts['source_slug']; ?>"  />
+			<input type="text" id="source_slug" class="widefat" name="geol[source_slug]" value="<?php echo $opts['source_slug']; ?>"  />
+			<span id="source_msg"></span>
 			<p class="help"><?php echo $settings['goto_url']; ?><span><?php echo $opts['source_slug']; ?></span></p>
 		</td>
 	</tr>
@@ -26,7 +27,6 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
 		<table class="form-table geol_repeater">
 		<tr id="<?php echo $key; ?>">
 			<td>
-
 				<div class="geol_border">
 				<table class="form-table">
 

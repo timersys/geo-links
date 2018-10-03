@@ -56,6 +56,14 @@ class GeoLinks_Admin {
 		wp_enqueue_script( 'geol-admin-js', plugin_dir_url( __FILE__ ) . 'js/geol-admin.js', array( 'jquery' ), $this->version, false );
 
 		wp_enqueue_style( 'geol-admin-css', GEOL_PLUGIN_URL . 'includes/admin/css/geol-admin.css', array(), $this->version, 'all' );
+
+		wp_localize_script( 'geol-admin-js', 'geol_var',
+				array(
+					'ajax_url' => admin_url( 'admin-ajax.php' ),
+					'nonce'    => wp_create_nonce( 'geol_nonce' )
+				)
+		);
+
 	}
 
 
