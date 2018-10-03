@@ -110,5 +110,3 @@ class Geol_Redirects {
 		return true;
 	}
 }
-
-new Geol_Redirects();

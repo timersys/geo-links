@@ -32,19 +32,18 @@ use GeotFunctions\Setting\GeotSettings;
 class GeoLinks {
 
 	/**
-	 * @var GeoLinks_Public $public
+	 * @var GeoLinks_Redirect $redirect
 	 */
-	public $public;
+	public $redirect;
 
 	/**
 	 * @var GeoLinks_Admin $admin
 	 */
 	public $admin;
 	/**
-	 * @var mixed|void Geotarget settings
+	 * @var GeoLinks_Settings $settings
 	 */
-	public $opts;
-	public $geot_opts;
+	public $settings;
 
 
 	/**
@@ -71,7 +70,7 @@ class GeoLinks {
 	 *
 	 * @since 1.0.0
 	 * @static
-	 * @see GEOT()
+	 * @see GEOL()
 	 * @return GeoLinks
 	 */
 	public static function instance() {
@@ -127,9 +126,9 @@ class GeoLinks {
 		GeotSettings::init();
 
 		$this->set_locale();
-		//$this->define_public_hooks();
+		$this->define_public_hooks();
 		//$this->define_global_hooks();
-		//$this->define_admin_hooks();
+		$this->define_admin_hooks();
 	}
 
 	/**
@@ -175,7 +174,8 @@ class GeoLinks {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-	
+		$this->admin = new GeoLinks_Admin();
+		$this->settings = new GeoLinks_Settings();
 	}
 
 
@@ -198,7 +198,7 @@ class GeoLinks {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-
+		$this->redirect = new Geol_Redirects();
 	}
 
 

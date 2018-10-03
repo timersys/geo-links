@@ -98,5 +98,3 @@ class GeoLinks_Admin {
 		);
 	}
 }
-
-new GeoLinks_Admin();

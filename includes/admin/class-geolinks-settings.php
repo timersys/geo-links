@@ -1,5 +1,4 @@
 <?php
-
 class GeoLinks_Settings {
 
 	public function __construct() {
@@ -48,5 +47,3 @@ class GeoLinks_Settings {
 		}
 	}
 }
-
-new GeoLinks_Settings();
