@@ -8,7 +8,7 @@ a.geol_symbol {
 	border-radius: 20px;
 	text-decoration: none;
 	background-color: #FFF;
-	color: #000;
+	color: #AAA;
 	margin: 5px 0;
     display: block;
 }
@@ -22,6 +22,7 @@ a.geol_less {
 
 a.geol_symbol:hover {
 	border: 1px solid #AAA;
+	color: red;
 }
 
 input.geol_options {
@@ -29,5 +30,5 @@ input.geol_options {
 }
 
 table.geol_repeater tr#dest_0 td a.geol_less {
-	display: none;
+	visibility: hidden;
 }

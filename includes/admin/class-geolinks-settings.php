@@ -3,6 +3,9 @@
 class GeoLinks_Settings {
 
 	public function __construct() {
+
+		add_action( 'admin_menu', [ $this, 'add_settings_menu' ]);
+		add_action( 'admin_init', [ $this, 'save_settings' ]);
 	}
 
 	/**
@@ -12,7 +15,7 @@ class GeoLinks_Settings {
 	 */
 	public function add_settings_menu() {
 
-		add_submenu_page( 'geot-settings', 'GeoLinks Settings', 'GeoLinks Settings', apply_filters( 'geol/settings_page_role', 'manage_options'), 'geotr-settings', [$this, 'settings_page'] );
+		add_submenu_page( 'geot-settings', 'GeoLinks Settings', 'GeoLinks Settings', apply_filters( 'geol/settings_page_role', 'manage_options'), 'geol-settings', [$this, 'settings_page'] );
 	}
 
 	/**
@@ -21,7 +24,6 @@ class GeoLinks_Settings {
 	 */
 	public function settings_page() {
 		$opts = geol_settings();
-		$pages = get_pages( array( 'post_status' => 'publish' ) );
 
 		include GEOL_PLUGIN_DIR  . 'includes/admin/settings/settings-page.php';
 	}
@@ -41,6 +43,10 @@ class GeoLinks_Settings {
 			$settings = esc_sql( $_POST['geol_settings'] );
 
 			update_option( 'geol_settings' ,  $settings);
+
+			GeoLinks_Permalinks::set_flush_needed();
 		}
 	}
 }
+
+new GeoLinks_Settings();

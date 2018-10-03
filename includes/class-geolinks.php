@@ -126,12 +126,10 @@ class GeoLinks {
 		$this->load_dependencies();
 		GeotSettings::init();
 
-		//$this->opts = geot_settings();
-		//$this->geol_opts = geot_pro_settings();
 		$this->set_locale();
-		$this->define_public_hooks();
-		$this->define_global_hooks();
-		$this->define_admin_hooks();
+		//$this->define_public_hooks();
+		//$this->define_global_hooks();
+		//$this->define_admin_hooks();
 	}
 
 	/**
@@ -145,9 +143,10 @@ class GeoLinks {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/functions.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geolinks-i18n.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/global/GeoLinksCpt.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/admin/class-geolinks-permalinks.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/admin/class-geolinks-settings.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/admin/class-geolinks-admin.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/public/class-geolinks-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/public/class-geolinks-redirect.php';
 	}
 
 	/**
@@ -176,20 +175,7 @@ class GeoLinks {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-
-		$this->admin = new GeoLinks_Admin();
-		$this->settings = new GeoLinks_Settings();
-
-		add_filter( 'plugin_action_links_' . GEOL_PLUGIN_HOOK, [ $this->admin, 'add_action_links' ] );
-
-		// settings page
-		add_action( 'admin_menu', [ $this->settings, 'add_settings_menu' ]);
-		add_action( 'admin_init', [ $this->settings, 'save_settings' ]);
-
-		// License and Updates
-		add_action( 'admin_init' , [ $this->admin, 'handle_updates' ], 0 );
-
-		add_action( 'admin_enqueue_scripts', [ $this->admin, 'enqueue_scripts' ] );
+	
 	}
 
 
@@ -201,14 +187,6 @@ class GeoLinks {
 	 * @access   private
 	 */
 	private function define_global_hooks() {
-		$this->global = new GeoLinksCpt();
-
-		//CPT
-		add_action( 'init', [ $this->global, 'register_cpt' ] );
-		add_action( 'add_meta_boxes_geol_cpt', [ $this->global, 'add_meta_boxes' ] );
-		add_action( 'save_post_geol_cpt', [ $this->global, 'save_meta_options' ] );
-		add_filter( 'manage_geol_cpt_posts_columns', [ $this->global, 'set_custom_cpt_columns' ] );
-		add_action( 'manage_geol_cpt_posts_custom_column', [ $this->global, 'set_custom_cpt_values' ],10, 2);
 
 	}
 
@@ -221,11 +199,6 @@ class GeoLinks {
 	 */
 	private function define_public_hooks() {
 
-		$this->public = new GeoLinks_Public();
-
-		add_action( 'init', [ $this->public , 'add_endpoint' ] );
-		add_filter( 'request', [ $this->public , 'endpoint_404' ] );
-		add_action( 'template_redirect', [ $this->public , 'endpoint_redirect' ] );
 	}
 
 

@@ -73,9 +73,11 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
 				</table>
 				</div>
 			</td>
-			<td>
-				<a href="" class="geol_symbol geol_plus">+</a>
-				<a href="" class="geol_symbol geol_less">-</a>
+			<td style="padding:1px;">
+				<a href="" class="button geol_plus" title="Add">+ ADD</a>
+			</td>
+			<td style="padding:1px;">
+				<a href="" class="geol_symbol geol_less" title="Remove">-</a>
 			</td>
 		</tr>
 		</table>

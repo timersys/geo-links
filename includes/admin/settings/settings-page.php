@@ -17,13 +17,7 @@
 			<tr valign="top" class="">
 				<th><label for="page_goto"><?php _e( 'Goto Page', 'geol'); ?></label></th>
 				<td colspan="3">
-					<select name="geol_settings[goto_page]">
-					<?php if( $pages ) : ?>
-						<?php foreach($pages as $page) : ?>
-							<option value="<?php echo $page->post_name; ?>" <?php selected($opts['goto_page'], $page->post_name); ?> ><?php echo $page->post_title; ?></option>
-						<?php endforeach; ?>
-					<?php endif; ?>
-					</select>
+					<input type="text" id="goto_page" name="geol_settings[goto_page]" value="<?php echo $opts['goto_page']; ?>" />
 					<p class="help"><?php printf(__( 'This page will be used to redirect the links: %s', 'geol'), $opts['goto_url'].'{{ link }}' ); ?></p>
 				</td>
 			</tr>

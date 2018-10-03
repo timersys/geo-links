@@ -33,6 +33,12 @@ class GeoLinks_Admin {
 	public function __construct() {
 
 		$this->version = GEOL_VERSION;
+
+		add_filter( 'plugin_action_links_' . GEOL_PLUGIN_HOOK, [ $this, 'add_action_links' ] );
+
+		// License and Updates
+		add_action( 'admin_init' , [ $this, 'handle_updates' ], 0 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 	}
 
 
@@ -84,4 +90,5 @@ class GeoLinks_Admin {
 		);
 	}
 }
-?>
+
+new GeoLinks_Admin();

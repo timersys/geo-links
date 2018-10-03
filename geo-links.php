@@ -35,17 +35,6 @@ if( !defined('GEOTROOT_PLUGIN_FILE'))
 	define( 'GEOTROOT_PLUGIN_FILE', GEOL_PLUGIN_FILE );
 
 /**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-geotr-activator.php
- */
-function activate_geol() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geol-activator.php';
-	Geol_Activator::activate();
-}
-
-register_activation_hook( __FILE__, 'activate_geol' );
-
-/**
  * The core plugin class that is used to define internationalization,
  * dashboard-specific hooks, and public-facing site hooks.
  */

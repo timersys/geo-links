@@ -7,6 +7,12 @@
 class GeoLinksCpt {
 
 	public function __construct() {
+		add_action( 'init', [ $this, 'register_cpt' ] );
+		add_action( 'add_meta_boxes_geol_cpt', [ $this, 'add_meta_boxes' ] );
+		add_action( 'save_post_geol_cpt', [ $this, 'save_meta_options' ] );
+		add_filter( 'manage_geol_cpt_posts_columns', [ $this, 'set_custom_cpt_columns' ] );
+		add_action( 'manage_geol_cpt_posts_custom_column', [ $this, 'set_custom_cpt_values' ],10, 2);
+		add_filter( 'wp_insert_post_data', [ $this, 'modify_post_name' ], 10, 2);
 	}
 
 	/**
@@ -15,6 +21,8 @@ class GeoLinksCpt {
 	 * @return void
 	 */
 	public function register_cpt() {
+
+		$settings = geol_settings();
 
 		$labels = array(
 			'name'               => 'Geo Links v'.GEOL_VERSION,
@@ -41,7 +49,7 @@ class GeoLinksCpt {
 			'show_in_menu'       => 'geot-settings',
 			'query_var'          => true,
 			'exclude_from_search'=> true,
-			'rewrite'            => array( 'slug' => 'geol_cpt' ),
+			'rewrite'            => array( 'slug' => $settings['goto_page'] ),
 			'capability_type'    => 'post',
 			'capabilities' => array(
 				'publish_posts'         => apply_filters( 'geol/settings_page/roles', 'manage_options'),
@@ -182,7 +190,7 @@ class GeoLinksCpt {
 		$settings = geol_settings();
 
 		// sanitize settings
-		$input['source_slug'] = sanitize_text_field($opts['source_slug']);
+		$input['source_slug'] = sanitize_title($opts['source_slug']);
 		
 		if( is_array($opts['dest']) && count($opts['dest']) > 0 ) { $i = 0;
 			foreach($opts['dest'] as $data) {
@@ -200,4 +208,49 @@ class GeoLinksCpt {
 		// save box settings
 		update_post_meta( $post_id, 'geol_options', apply_filters( 'geol/metaboxes/sanitized_options', $input ) );
 	}
+
+	public function modify_post_name($data, $postarr) {
+
+		if ( !isset( $postarr['geol_options_nonce'] ) ||
+			 !wp_verify_nonce( $postarr['geol_options_nonce'], 'geol_options' ) ||
+			 $postarr['post_type'] != 'geol_cpt' ||
+			 $postarr['post_status'] != 'publish' ||
+			 $postarr['post_parent'] != 0
+			) return $data;
+
+		$post_id = isset( $postarr['ID'] ) && is_numeric( $postarr['ID'] ) ? $postarr['ID'] : 0;
+
+		// If this is an autosave, our form has not been submitted, so we don't want to do anything.
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return $data;
+		}
+		// same for ajax
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			return $data;
+		}
+		// same for cron
+		if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
+			return $data;
+		}
+		// same for posts revisions
+		if ( is_int( wp_is_post_autosave( $post_id ) ) ) {
+			return $data;
+		}
+
+		// can user edit this post?
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return $data;
+		}
+		
+		$post_type = $postarr['post_type'];
+		$post_status = $postarr['post_status'];
+		$post_parent = $postarr['post_parent'];
+		$post_name = sanitize_title( $postarr['geol']['source_slug'] );
+
+		$data['post_name'] = wp_unique_post_slug($post_name, $post_id, $post_status, $post_type, $post_parent );
+		
+		return $data;
+	}
 }
+
+new GeoLinksCpt();
