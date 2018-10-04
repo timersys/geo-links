@@ -8,10 +8,10 @@
 				</td>
 			</tr>
 			<tr valign="top" class="">
-				<th><label for="page_goto"><?php _e( 'Goto Page', 'geol'); ?></label></th>
+				<th><label for="page_goto"><?php _e( 'Redirection slug', 'geol'); ?></label></th>
 				<td colspan="3">
 					<input type="text" id="goto_page" name="geol_settings[goto_page]" value="<?php echo $opts['goto_page']; ?>" />
-					<p class="help"><?php printf(__( 'This page will be used to redirect the links: %s', 'geol'), $opts['goto_url'].'{{ link }}' ); ?></p>
+					<p class="help"><?php printf(__( 'The slug that will proceed your geolinks: %s', 'geol'), site_url( $opts['goto_page'] ). '/{{ geo-link }}' ); ?></p>
 				</td>
 			</tr>
 
