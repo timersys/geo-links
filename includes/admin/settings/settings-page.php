@@ -8,13 +8,6 @@
 				</td>
 			</tr>
 			<tr valign="top" class="">
-				<th><label for="ajax_mode"><?php _e( 'Ajax Mode', 'geol'); ?></label></th>
-				<td colspan="3">
-					<input type="checkbox" id="ajax_mode" name="geol_settings[ajax_mode]" value="1" <?php checked($opts['ajax_mode'],'1');?> />
-					<p class="help"><?php _e( 'In Ajax mode, after page load an extra request is made and the user it\'s redirected if needed.', 'geol'); ?></p>
-				</td>
-			</tr>
-			<tr valign="top" class="">
 				<th><label for="page_goto"><?php _e( 'Goto Page', 'geol'); ?></label></th>
 				<td colspan="3">
 					<input type="text" id="goto_page" name="geol_settings[goto_page]" value="<?php echo $opts['goto_page']; ?>" />
