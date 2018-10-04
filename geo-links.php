@@ -55,10 +55,10 @@ global $geol;
  * @since    1.0.0
  */
 
-function run_Geol() {
+function Geol() {
 
 	return GeoLinks::instance();
 }
-$GLOBALS['geol'] = run_Geol();
+$GLOBALS['geol'] = Geol();
 
 

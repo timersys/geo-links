@@ -47,16 +47,6 @@ class GeoLinks {
 
 
 	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
-
-
-	/**
 	 * Plugin Instance
 	 * @since 1.0.0
 	 * @var The Geot plugin instance
@@ -126,9 +116,7 @@ class GeoLinks {
 		GeotSettings::init();
 
 		$this->set_locale();
-		$this->define_public_hooks();
-		//$this->define_global_hooks();
-		$this->define_admin_hooks();
+		$this->set_objects();
 	}
 
 	/**
@@ -167,60 +155,13 @@ class GeoLinks {
 	}
 
 	/**
-	 * Register all of the hooks related to the dashboard functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * Set all global objects
 	 */
-	private function define_admin_hooks() {
+	private function set_objects() {
 		$this->admin = new GeoLinks_Admin();
 		$this->settings = new GeoLinks_Settings();
-	}
-
-
-	/**
-	 * Register all of the hooks that run globally
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_global_hooks() {
-
-	}
-
-	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_public_hooks() {
 		$this->redirect = new Geol_Redirects();
 	}
 
 
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
-	}
-
-
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
 }
