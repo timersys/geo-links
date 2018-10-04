@@ -25,14 +25,15 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'GEOL_PLUGIN_FILE' , __FILE__);
-define( 'GEOL_VERSION' , '1.0.0' );
-define( 'GEOL_DB_VERSION' , '1.2' );
-define( 'GEOL_PLUGIN_DIR' , plugin_dir_path(__FILE__) );
-define( 'GEOL_PLUGIN_URL' , plugin_dir_url(__FILE__) );
-define( 'GEOL_PLUGIN_HOOK' , basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ) );
-if( !defined('GEOTROOT_PLUGIN_FILE'))
+define( 'GEOL_PLUGIN_FILE', __FILE__ );
+define( 'GEOL_VERSION', '1.0.0' );
+define( 'GEOL_DB_VERSION', '1.2' );
+define( 'GEOL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'GEOL_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'GEOL_PLUGIN_HOOK', basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ) );
+if ( ! defined( 'GEOTROOT_PLUGIN_FILE' ) ) {
 	define( 'GEOTROOT_PLUGIN_FILE', GEOL_PLUGIN_FILE );
+}
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -59,6 +60,7 @@ function Geol() {
 
 	return GeoLinks::instance();
 }
+
 $GLOBALS['geol'] = Geol();
 
 

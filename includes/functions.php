@@ -7,7 +7,7 @@
 function geol_settings() {
 	$defaults = apply_filters( 'geol/settings_page/defaults', [
 			'ajax_mode' => '0',
-			'goto_page' => 'goto'
+			'goto_page' => 'goto',
 		]
 	);
 

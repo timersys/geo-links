@@ -12,6 +12,7 @@
  * @package    GeoLinks
  * @subpackage GeoLinks/includes
  */
+
 use GeotFunctions\Setting\GeotSettings;
 
 
@@ -67,6 +68,7 @@ class GeoLinks {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
+
 		return self::$_instance;
 	}
 
@@ -88,12 +90,14 @@ class GeoLinks {
 
 	/**
 	 * Auto-load in-accessible properties on demand.
+	 *
 	 * @param mixed $key
+	 *
 	 * @since 1.0.0
 	 * @return mixed
 	 */
 	public function __get( $key ) {
-		if ( in_array( $key, array( 'payment_gateways', 'shipping', 'mailer', 'checkout' ) ) ) {
+		if ( in_array( $key, [ 'payment_gateways', 'shipping', 'mailer', 'checkout' ] ) ) {
 			return $this->$key();
 		}
 	}
@@ -110,7 +114,7 @@ class GeoLinks {
 	public function __construct() {
 
 		$this->plugin_name = 'geol';
-		$this->version = GEOL_VERSION;
+		$this->version     = GEOL_VERSION;
 
 		$this->load_dependencies();
 		GeotSettings::init();
@@ -150,7 +154,7 @@ class GeoLinks {
 		$plugin_i18n = new GeoLinks_i18n();
 		$plugin_i18n->set_domain( 'geolinks' );
 
-		add_action( 'plugins_loaded', [$plugin_i18n, 'load_plugin_textdomain'] );
+		add_action( 'plugins_loaded', [ $plugin_i18n, 'load_plugin_textdomain' ] );
 
 	}
 
@@ -158,7 +162,7 @@ class GeoLinks {
 	 * Set all global objects
 	 */
 	private function set_objects() {
-		$this->admin = new GeoLinks_Admin();
+		$this->admin    = new GeoLinks_Admin();
 		$this->settings = new GeoLinks_Settings();
 		$this->redirect = new Geol_Redirects();
 	}

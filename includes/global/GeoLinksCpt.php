@@ -115,8 +115,8 @@ class GeoLinksCpt {
 	 */
 	function set_custom_cpt_values( $column, $post_id ) {
 
-		$settings = geol_settings();
-		$opts     = geol_options( $post_id );
+		$settings     = geol_settings();
+		$opts         = geol_options( $post_id );
 		$value_column = '';
 
 		switch ( $column ) {
@@ -143,15 +143,16 @@ class GeoLinksCpt {
 		global $wp_meta_boxes;
 
 		// remove all other  metaboxes
-		if( isset( $wp_meta_boxes['geol_cpt']['normal'] ) ) {
+		if ( isset( $wp_meta_boxes['geol_cpt']['normal'] ) ) {
 			unset( $wp_meta_boxes['geol_cpt']['normal'] );
 		}
-		if( isset( $wp_meta_boxes['geol_cpt']['core'] ) ) {
-		 	foreach ( $wp_meta_boxes['geol_cpt']['core'] as $key => $mb ) {
-		 		if( 'submitdiv' == $key )
-		 			continue;
-		 		unset( $wp_meta_boxes['geol_cpt']['core'][$key] );
-		    }
+		if ( isset( $wp_meta_boxes['geol_cpt']['core'] ) ) {
+			foreach ( $wp_meta_boxes['geol_cpt']['core'] as $key => $mb ) {
+				if ( 'submitdiv' == $key ) {
+					continue;
+				}
+				unset( $wp_meta_boxes['geol_cpt']['core'][ $key ] );
+			}
 		}
 
 		add_meta_box(
@@ -218,7 +219,7 @@ class GeoLinksCpt {
 		$opts = $_POST['geol'];
 		unset( $_POST['geol'] );
 
-		$post     = get_post( $post_id );
+		$post = get_post( $post_id );
 
 		if ( isset( $post->post_name ) ) {
 			$source_slug          = sanitize_title( $opts['source_slug'] );
@@ -332,7 +333,7 @@ class GeoLinksCpt {
 
 			$opts = maybe_unserialize( $result->meta_value );
 
-			if ( isset($opts['source_slug']) && $opts['source_slug'] == $source_slug ) {
+			if ( isset( $opts['source_slug'] ) && $opts['source_slug'] == $source_slug ) {
 
 				$output = [
 					'type' => 'error',
