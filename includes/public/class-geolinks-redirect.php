@@ -34,78 +34,94 @@ class Geol_Redirects {
 	public function __construct() {
 		self::$detect = new Mobile_Detect;
 
-		add_action( 'template_redirect', [ $this , 'redirect_link' ] );
+		add_action( 'template_redirect', [ $this, 'redirect_link' ] );
 	}
 
 	/**
 	 * Apply redirect
-	 * @param 
+	 *
+	 * @param
+	 *
 	 * @since 1.0.0
 	 */
 	public function redirect_link() {
 
-		if( is_singular( 'geol_cpt' ) ) {
+		if ( is_singular( 'geol_cpt' ) ) {
+			$redirect_id = get_the_id();
+			$opts        = geol_options( $redirect_id );
+			$settings    = geol_settings();
+			// check redirections to see if we have any match
+			foreach ( $opts['dest'] as $redirect ) {
+				// add default redirect code
+				$redirect['status_code'] = $settings['redirect_code'];
 
-			global $post;
+				$redirect = apply_filters( 'geol/redirect_params', $redirect, $redirect_id );
 
-			$country_name 	= geot_country_name();
-			$city_name 		= geot_city_name();
-			$state_name 	= geot_state_name();
-
-			$geo_user = array('country' => $country_name, 'state' => $state_name, 'city' => $city_name);
-
-			$opts = geol_options( $post->ID );
-			
-			foreach($opts['dest'] as $dest) {
-
-				if( $this->geo_validation( $dest, $geo_user ) ) {
-					wp_redirect($dest['url']);
+				// validate redirect
+				if ( $this->validate_redirection( $redirect ) ) {
+					// last change to abort
+					if ( apply_filters( 'geol/cancel_redirect', false, $redirect, $redirect_id ) ) {
+						return;
+					}
+					wp_redirect( esc_url( $redirect['url'] ), $redirect['status_code'] );
 					exit();
 				}
 			}
-			
+
 		}
 	}
 
 
 	/**
 	 * conditional geo validation
-	 * @param $dest is cpt values
+	 *
+	 * @param $redirect is cpt values
 	 * @param $geo is geot targeting
+	 *
 	 * @since 1.0.0
+	 * @return bool
 	 */
-	private function geo_validation($dest, $geo) {
-		
-		$referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+	private function validate_redirection( $redirect, $geo ) {
+
+		$referrer = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : '';
 
 		// Ref
-		if ( !empty($dest['ref']) && strpos( $referrer, $dest['ref'] ) === false )
+		if ( ! empty( $dest['ref'] ) && strpos( $referrer, $redirect['ref'] ) === false ) {
 			return false;
+		}
 
 		//Devices
-		if( $dest['device'] == 'mobiles' && !self::$detect->isMobile() )
+		if ( $redirect['device'] == 'mobiles' && self::$detect->isMobile() ) {
 			return false;
+		}
 
-		if( $dest['device'] == 'tablets' && !self::$detect->isTablet() )
+		if ( $redirect['device'] == 'tablets' && self::$detect->isTablet() ) {
 			return false;
+		}
 
-		if( $dest['device'] == 'desktop' && ( self::$detect->isTablet() || self::$detect->isMobile() ) )
+		if ( $redirect['device'] == 'desktop' && ( ! self::$detect->isTablet() && ! self::$detect->isMobile() ) ) {
 			return false;
+		}
 
 		// Country
-		if( !empty( $dest['country'] ) &&
-			sanitize_title( $dest['country'] ) != sanitize_title( $geo['country'] )
-		)	return false;
+		if ( ! empty( $redirect['country'] ) && ! geot_target( $redirect['country'] ) ) {
+			return false;
+		}
 
-		// State
-		if( !empty( $dest['state'] ) &&
-			sanitize_title( $dest['state'] ) != sanitize_title( $geo['state'] )
-		)	return false;
+		// regions
+		if ( ! empty( $redirect['country_regions'] ) && ! geot_target( '', $redirect['country_regions'] ) ) {
+			return false;
+		}
 
-		// City
-		if( !empty( $dest['city'] ) &&
-			sanitize_title( $dest['city'] ) != sanitize_title( $geo['city'] )
-		)	return false;
+		// Cities
+		if ( ! empty( $redirect['city'] ) && ! geot_target_city( $redirect['city'] ) ) {
+			return false;
+		}
+
+		// States
+		if ( ! empty( $redirect['states'] ) && ! geot_target_state( $redirect['states'] ) ) {
+			return false;
+		}
 
 		return true;
 	}
