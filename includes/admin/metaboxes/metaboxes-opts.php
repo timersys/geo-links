@@ -11,7 +11,7 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
 		<td id="source">
 			<input type="text" id="source_slug" class="widefat" name="geol[source_slug]" value="<?php echo $opts['source_slug']; ?>"  />
 			<span id="source_msg"></span>
-			<p class="help"><?php echo $settings['goto_url']; ?><span><?php echo $opts['source_slug']; ?></span></p>
+			<p class="help"><?php echo site_url( $settings['goto_page'] ); ?>/<span><?php echo $opts['source_slug']; ?></span></p>
 		</td>
 	</tr>
 

@@ -37,8 +37,6 @@ class GeoLinks_Settings {
 			wp_verify_nonce( $_POST['geol_nonce'], 'geol_save_settings' )
 		) {
 
-			$_POST['geol_settings']['goto_url'] = trailingslashit( site_url( $_POST['geol_settings']['goto_page'] ) );
-
 			$settings = esc_sql( $_POST['geol_settings'] );
 
 			update_option( 'geol_settings' ,  $settings);
