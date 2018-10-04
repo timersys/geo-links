@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Responsible for flushing the permalinks when needed.
  *
@@ -16,7 +17,7 @@ class GeoLinks_Permalinks {
 	 * @since    2.0.1
 	 */
 	public static function init() {
-		add_action( 'admin_init', array( __CLASS__, 'check_if_flush_needed' ) );
+		add_action( 'admin_init', [ __CLASS__, 'check_if_flush_needed' ] );
 	}
 
 	/**
