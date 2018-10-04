@@ -121,7 +121,7 @@ class GeoLinksCpt {
 
 		switch ( $column ) {
 			case 'source_url' :
-				$value_column = $settings['goto_url'] . $opts['source_slug'];
+				$value_column = site_url( $opts['source_slug'] );
 				break;
 			case 'count_dest' :
 				$value_column = count( $opts['dest'] );
@@ -142,8 +142,17 @@ class GeoLinksCpt {
 	public function add_meta_boxes() {
 		global $wp_meta_boxes;
 
-		// remove all metaboxes
-		unset($wp_meta_boxes['geol_cpt']);
+		// remove all other  metaboxes
+		if( isset( $wp_meta_boxes['geol_cpt']['normal'] ) ) {
+			unset( $wp_meta_boxes['geol_cpt']['normal'] );
+		}
+		if( isset( $wp_meta_boxes['geol_cpt']['core'] ) ) {
+		 	foreach ( $wp_meta_boxes['geol_cpt']['core'] as $key => $mb ) {
+		 		if( 'submitdiv' == $key )
+		 			continue;
+		 		unset( $wp_meta_boxes['geol_cpt']['core'][$key] );
+		    }
+		}
 
 		add_meta_box(
 			'geol-opts',
@@ -210,7 +219,6 @@ class GeoLinksCpt {
 		unset( $_POST['geol'] );
 
 		$post     = get_post( $post_id );
-		$settings = geol_settings();
 
 		if ( isset( $post->post_name ) ) {
 			$source_slug          = sanitize_title( $opts['source_slug'] );
