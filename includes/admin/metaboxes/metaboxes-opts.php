@@ -36,6 +36,7 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
 						<th><label for="geol_trigger"><?php _e( 'Destination URL', 'geol' ); ?></label></th>
 						<td>
 							<input type="text" class="widefat" name="geol[dest][<?php echo $key; ?>][url]" value="<?php echo esc_attr($data['url']); ?>" placeholder="<?php _e('Enter you destination url', 'geol'); ?>"  />
+							<p class="help-text"><?php __( 'Where the user is going to be redirected if rules below match', 'geolinks');?></p>
 						</td>
 					</tr>
 
@@ -59,6 +60,7 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
 									<option value="<?php echo $key_dev; ?>" <?php selected($data['device'],$key_dev) ?>><?php echo $name_dev; ?></option>
 								<?php endforeach; ?>
 							</select>
+							<p class="help-text"><?php __( 'Only redirect if using this device', 'geolinks');?></p>
 						</td>
 					</tr>
 
@@ -66,6 +68,7 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
 						<th><label for="geol_trigger"><?php _e( 'Referrer URL', 'geol' ); ?></label></th>
 						<td>
 							<input type="text" class="widefat" name="geol[dest][<?php echo $key; ?>][ref]" value="<?php echo esc_attr($data['ref']); ?>"  />
+							<p class="help-text"><?php __( 'Only redirect if user coming from this url', 'geolinks');?></p>
 						</td>
 					</tr>
 
