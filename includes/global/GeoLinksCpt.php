@@ -224,8 +224,15 @@ class GeoLinksCpt {
 		if ( isset( $post->post_name ) ) {
 			$source_slug          = sanitize_title( $opts['source_slug'] );
 			$input['source_slug'] = $post->post_name == $source_slug ? $source_slug : $post->post_name;
-		} else {
+		} else
 			$input['source_slug'] = sanitize_title( $opts['source_slug'] );
+
+		$input['status_code'] = is_numeric( $opts['status_code'] ) ? sanitize_title( $opts['status_code'] ) : '302';
+
+		if( is_numeric($post_id) ) {
+			$click = geol_options($post_id);
+			$input['count_click'] = isset( $click['count_click'] ) ? $click['count_click'] : 0;
+			$input['count_match'] = isset( $click['count_match'] ) ? $click['count_match'] : 0;
 		}
 
 		if ( is_array( $opts['dest'] ) && count( $opts['dest'] ) > 0 ) {
@@ -238,6 +245,9 @@ class GeoLinksCpt {
 				$input['dest'][ $key ]['city']    = esc_html( $data['city'] );
 				$input['dest'][ $key ]['device']  = esc_html( $data['device'] );
 				$input['dest'][ $key ]['ref']     = esc_url( $data['ref'] );
+
+				if( is_numeric($post_id) )
+					$input['dest'][ $key ]['count_dest'] = isset( $click['dest'][$key]['count_dest'] ) ? $click['dest'][$key]['count_dest'] : 0;
 				$i ++;
 			}
 		}
@@ -323,11 +333,24 @@ class GeoLinksCpt {
 			'icon' => 'dashicons-yes',
 		];
 
-		$source_slug = sanitize_title( $_POST['slug'] );
-		$meta_key    = 'geol_options';
-		$query       = 'SELECT post_id, meta_value FROM ' . $wpdb->postmeta . ' WHERE meta_key = %s';
+		$source_slug	= sanitize_title( $_POST['slug'] );
+		$exclude_id		= sanitize_title( $_POST['exclude'] );
+		$meta_key		= 'geol_options';
 
-		$results = $wpdb->get_results( $wpdb->prepare( $query, $meta_key ) );
+		if( isset($exclude_id) && is_numeric($exclude_id) ) {
+			
+			$query 		= 'SELECT
+								meta_value
+							FROM
+								' . $wpdb->postmeta . '
+							WHERE
+								post_id <> %d && meta_key = %s';
+
+			$results 	= $wpdb->get_results( $wpdb->prepare( $query, $exclude_id, $meta_key ) );
+		} else {
+			$query 		= 'SELECT meta_value FROM ' . $wpdb->postmeta . ' WHERE meta_key = %s';
+			$results 	= $wpdb->get_results( $wpdb->prepare( $query, $meta_key ) );
+		}
 
 		foreach ( $results as $result ) {
 

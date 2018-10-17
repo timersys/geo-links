@@ -35,6 +35,7 @@ class Geol_Redirects {
 		self::$detect = new Mobile_Detect;
 
 		add_action( 'template_redirect', [ $this, 'redirect_link' ] );
+		add_shortcode( 'geo-link' , [$this, 'add_shortcode'], 10, 2 );
 	}
 
 	/**
@@ -46,24 +47,33 @@ class Geol_Redirects {
 	 */
 	public function redirect_link() {
 
-		if ( is_singular( 'geol_cpt' ) ) {
-			$redirect_id = get_the_id();
-			$opts        = geol_options( $redirect_id );
-			$settings    = geol_settings();
-			// check redirections to see if we have any match
-			foreach ( $opts['dest'] as $redirect ) {
-				// add default redirect code
-				$redirect['status_code'] = $settings['redirect_code'];
+		update_option('aabbtest7','entro7');
 
-				$redirect = apply_filters( 'geol/redirect_params', $redirect, $redirect_id );
+		if ( is_singular( 'geol_cpt' ) ) {
+			update_option('aabbtest8','entro8');
+			$post_id	= get_the_id();
+			$opts 		= geol_options( $post_id );
+			$settings 	= geol_settings();
+
+			$this->count_click('click', $post_id, $opts);
+			
+			// check redirections to see if we have any match
+			foreach ( $opts['dest'] as $key => $redirect ) {
+
+				$redirect = apply_filters( 'geol/redirect_params', $redirect, $post_id );
 
 				// validate redirect
 				if ( $this->validate_redirection( $redirect ) ) {
+					
 					// last change to abort
-					if ( apply_filters( 'geol/cancel_redirect', false, $redirect, $redirect_id ) ) {
+					if ( apply_filters( 'geol/cancel_redirect', false, $redirect, $post_id ) ) {
 						return;
 					}
-					wp_redirect( esc_url( $redirect['url'] ), $redirect['status_code'] );
+
+					$this->count_click('match', $post_id, $opts);
+					$this->count_click('dest', $post_id, $opts, $key);
+
+					wp_redirect( esc_url( $redirect['url'] ), $opts['status_code'] );
 					exit();
 				}
 			}
@@ -81,7 +91,7 @@ class Geol_Redirects {
 	 * @since 1.0.0
 	 * @return bool
 	 */
-	private function validate_redirection( $redirect, $geo ) {
+	private function validate_redirection( $redirect ) {
 
 		$referrer = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : '';
 
@@ -124,5 +134,84 @@ class Geol_Redirects {
 		}
 
 		return true;
+	}
+
+
+	function count_click($field, $post_id, $opts, $dest_key = '') {
+
+		switch($field) {
+			case 'click' :
+					if( isset( $opts['count_click'] ) && is_numeric( $opts['count_click'] ) )
+						$opts['count_click']++;
+					else
+						$opts['count_click'] = 1;
+
+					break;
+			case 'match' :
+					if( isset( $opts['count_match'] ) && is_numeric( $opts['count_match'] ) )
+						$opts['count_match']++;
+					else
+						$opts['count_match'] = 1;
+
+					break;
+			case 'dest' :
+					if( isset( $opts['dest'][$dest_key]['count_dest'] ) &&
+						is_numeric( $opts['dest'][$dest_key]['count_dest'] )
+					)
+						$opts['dest'][$dest_key]['count_dest']++;
+					else
+						$opts['dest'][$dest_key]['count_dest'] = 1;
+
+					break;
+		}
+
+		// save box settings
+		update_post_meta( $post_id, 'geol_options', apply_filters( 'geol/redirect/count_click', $opts ) );
+
+	}
+
+
+	/**
+	 * Add Shortcode
+	 *
+	 * @param
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_shortcode($atts, $content = '') {
+		$atts = shortcode_atts( array(
+			'slug'			=> 'geo-slug',
+			'nofollow'		=> 'no',
+			'noreferrer'	=> 'no',
+		), $atts, 'geo-link' );
+
+		$return = '';
+		$post = get_page_by_path($atts['slug'], OBJECT, 'geol_cpt');
+
+		if( isset($post->ID) ) {
+
+			$rel = array();
+			$content = !empty($content) ? $content : 'Geo Link';
+			$settings = geol_settings();
+			$opts = geol_options($post->ID);
+
+
+			// REL
+			if( $atts['nofollow'] == 'yes' )
+				$rel[] = 'nofollow';
+
+			if( $atts['noreferrer'] == 'yes' )
+				$rel[] = 'noreferrer';
+
+			$attr_rel = count($rel) > 0 ? 'rel="'.implode(' ', $rel).'"' : '';
+
+
+			// Output
+			$link =  trailingslashit( site_url( $settings['goto_page'] ) ) . $opts['source_slug'];
+
+			$return = '<a href="' . $link . '" '.$attr_rel.' >' . $content . '</a>';
+		}
+
+		return $return;
 	}
 }

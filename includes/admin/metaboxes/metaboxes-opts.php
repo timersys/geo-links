@@ -6,10 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<table class="form-table">
 
-		<?php do_action( 'geol/metaboxes/before_url', $opts ); ?>
+		<?php do_action( 'geol/metaboxes/before_source', $opts ); ?>
 
 		<tr valign="top">
-			<th><label for="geol_trigger"><?php _e( 'Link Slug', 'geol' ); ?></label></th>
+			<th><label for="source_slug"><?php _e( 'Link Slug', 'geol' ); ?></label></th>
 			<td id="source">
 				<input type="text" id="source_slug" class="widefat" name="geol[source_slug]"
 				       value="<?php echo $opts['source_slug']; ?>"/>
@@ -19,7 +19,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 
-		<?php do_action( 'geol/metaboxes/before_url', $opts ); ?>
+		<tr valign="top">
+			<th><label for="status_code"><?php _e( 'Redirection code', 'geol' ); ?></label></th>
+			<td id="code">
+				<input type="number" id="status_code" class="widefat" name="geol[status_code]"
+				       value="<?php echo $opts['status_code']; ?>"/>
+				<span id="source_msg"></span>
+				<p class="help"><?php _e('Add redirection code. Default to 302','geol'); ?></p>
+			</td>
+		</tr>
+
+		<?php do_action( 'geol/metaboxes/after_source', $opts ); ?>
 
 	</table>
 

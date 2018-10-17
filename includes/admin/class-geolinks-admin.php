@@ -61,8 +61,9 @@ class GeoLinks_Admin {
 
 		wp_localize_script( 'geol-admin-js', 'geol_var',
 			[
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'nonce'    => wp_create_nonce( 'geol_nonce' ),
+				'ajax_url'	=> admin_url( 'admin-ajax.php' ),
+				'nonce'		=> wp_create_nonce( 'geol_nonce' ),
+				'post_id'	=> $post->ID,
 			]
 		);
 

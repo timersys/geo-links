@@ -48,7 +48,8 @@ jQuery(document).on('focusout','input#source_slug', function() {
 	jQuery.post(geol_var.ajax_url, 	{
 				action: 'geol_source',
 				slug : source_slug,
-				wpnonce: geol_var.nonce
+				wpnonce: geol_var.nonce,
+				exclude: geol_var.post_id
 			},
 			function(response) {
 				var style;

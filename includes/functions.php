@@ -27,15 +27,16 @@ function geol_settings() {
 function geol_options( $id ) {
 	$defaults = apply_filters( 'geol/metaboxes/defaults', [
 			'source_slug' => '',
+			'status_code' => '302',
 			'dest'        => [
 				'dest_0' =>
 					[
-						'url'     => '',
-						'ref'     => '',
-						'country' => '',
-						'state'   => '',
-						'city'    => '',
-						'device'  => '',
+						'url'		=> '',
+						'ref'		=> '',
+						'country'	=> '',
+						'state'		=> '',
+						'city'		=> '',
+						'device'	=> '',
 					],
 			],
 		]
@@ -51,7 +52,7 @@ function geol_options( $id ) {
  * @return array metadata values
  */
 function geol_devices() {
-	return apply_filters( 'geol/devices/get_default', [
+	return apply_filters( 'geol/devices/defaults', [
 		'mobiles' => __( "Mobile Phone", 'geol' ),
 		'tablets' => __( "Tablet", 'geol' ),
 		'desktop' => __( "Dekstop", 'geol' ),
