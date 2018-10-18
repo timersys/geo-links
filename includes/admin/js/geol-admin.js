@@ -2,10 +2,23 @@ jQuery(document).on('click', 'table.geol_repeater a.geol_plus', function(e) {
 	e.preventDefault();
 
 	//vars
-	var $tr = jQuery(this).closest('tr');
-	var $add = $tr.clone(),
-				old_id = $add.attr('id'),
-				new_id = 'dest_' + ( parseInt( old_id.replace('dest_', ''), 10 ) + 1);
+	var $tr = jQuery(this).closest('tr'),
+		$add = $tr.clone(),
+		old_id = $add.attr('id'),
+		new_id = 'dest_' + ( parseInt( old_id.replace('dest_', ''), 10 ) + 1);
+
+
+	$add.find('.selectize-control').remove();
+
+	$add.find('.geol_countries').selectize({
+				options : geol_var.countries,
+				plugins: ['remove_button'],
+			});
+
+	$add.find('.geol_regions').selectize({
+				options : geol_var.regions,
+				plugins: ['remove_button'],
+			});
 
 	// update names
 	$add.find('[name]').each(function(){
@@ -53,8 +66,6 @@ jQuery(document).on('focusout','input#source_slug', function() {
 			},
 			function(response) {
 				var style;
-				//var data = jQuery.parseJSON(response);
-				//console.log(response);
 
 				if( response.type == 'success' )
 					style = 'color:green;';

@@ -25,10 +25,6 @@ a.geol_symbol:hover {
 	color: red;
 }
 
-input.geol_options {
-	width: 30%;
-}
-
 table.geol_repeater tr#dest_0 td a.geol_less {
 	visibility: hidden;
 }

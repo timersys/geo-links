@@ -187,6 +187,23 @@ class GeoLinksCpt {
 		$settings = geol_settings();
 		$opts     = geol_options( $post->ID );
 		$devices  = geol_devices();
+		$countries = geot_countries();
+
+		$geowp     = geot_settings();
+		$defaults = [
+			'region'                    => [['name','countries']],
+			'city_region'               => [['name','cities']],
+			'cache_mode'                => '0',
+			'ajax_mode'                 => '0',
+			'debug_mode'                => '0',
+			'disable_menu_integration'  => '0',
+			'disable_widget_integration'=> '0',
+			'maxmind'                   => '0',
+			'ip2location'               => '0',
+			'geot_uninstall'            => '',
+		];
+
+		$geowp = wp_parse_args( $geowp, apply_filters ('geot/default_settings', $defaults ) );
 
 		include GEOL_PLUGIN_DIR . '/includes/admin/metaboxes/metaboxes-opts.php';
 	}
@@ -247,12 +264,13 @@ class GeoLinksCpt {
 			$i = 0;
 			foreach ( $opts['dest'] as $data ) {
 				$key                              = 'dest_' . $i;
-				$input['dest'][ $key ]['url']     = esc_url( $data['url'] );
-				$input['dest'][ $key ]['country'] = esc_html( $data['country'] );
-				$input['dest'][ $key ]['state']   = esc_html( $data['state'] );
-				$input['dest'][ $key ]['city']    = esc_html( $data['city'] );
-				$input['dest'][ $key ]['device']  = esc_html( $data['device'] );
-				$input['dest'][ $key ]['ref']     = esc_url( $data['ref'] );
+				$input['dest'][ $key ]['url']		= esc_url( $data['url'] );
+				$input['dest'][ $key ]['countries']	= array_map('esc_html', $data['countries'] );
+				$input['dest'][ $key ]['regions']	= array_map('esc_html', $data['regions'] );
+				$input['dest'][ $key ]['states']	= esc_html( $data['states'] );
+				$input['dest'][ $key ]['cities']	= esc_html( $data['cities'] );
+				$input['dest'][ $key ]['device']	= esc_html( $data['device'] );
+				$input['dest'][ $key ]['ref']		= esc_url( $data['ref'] );
 
 				$input['dest'][ $key ]['count_dest'] = isset( $outs['dest'][ $key ]['count_dest'] ) ? $outs['dest'][ $key ]['count_dest'] : 0;
 				$i ++;

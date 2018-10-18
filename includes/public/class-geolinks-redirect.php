@@ -47,10 +47,7 @@ class Geol_Redirects {
 	 */
 	public function redirect_link() {
 
-		update_option('aabbtest7','entro7');
-
 		if ( is_singular( 'geol_cpt' ) ) {
-			update_option('aabbtest8','entro8');
 
 			$post_id	= get_the_id();
 			$opts 		= geol_options( $post_id );
@@ -101,31 +98,33 @@ class Geol_Redirects {
 			return false;
 		}
 
-		//Devices
+		//Devices Mobiles
 		if ( $redirect['device'] == 'mobiles' && self::$detect->isMobile() ) {
 			return false;
 		}
 
+		//Devices Tablets
 		if ( $redirect['device'] == 'tablets' && self::$detect->isTablet() ) {
 			return false;
 		}
 
+		//Devices Desktop
 		if ( $redirect['device'] == 'desktop' && ( ! self::$detect->isTablet() && ! self::$detect->isMobile() ) ) {
 			return false;
 		}
 
 		// Country
-		if ( ! empty( $redirect['country'] ) && ! geot_target( $redirect['country'] ) ) {
+		if ( ! empty( $redirect['countries'] ) && ! geot_target( $redirect['countries'] ) ) {
 			return false;
 		}
 
 		// regions
-		if ( ! empty( $redirect['country_regions'] ) && ! geot_target( '', $redirect['country_regions'] ) ) {
+		if ( ! empty( $redirect['regions'] ) && ! geot_target( '', $redirect['regions'] ) ) {
 			return false;
 		}
 
 		// Cities
-		if ( ! empty( $redirect['city'] ) && ! geot_target_city( $redirect['city'] ) ) {
+		if ( ! empty( $redirect['cities'] ) && ! geot_target_city( $redirect['cities'] ) ) {
 			return false;
 		}
 

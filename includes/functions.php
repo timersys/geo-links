@@ -35,9 +35,10 @@ function geol_options( $id ) {
 					[
 						'url'		=> '',
 						'ref'		=> '',
-						'country'	=> '',
-						'state'		=> '',
-						'city'		=> '',
+						'countries'	=> array(),
+						'regions'	=> array(),
+						'states'	=> '',
+						'cities'	=> '',
 						'device'	=> '',
 						'count_dest' => 0,
 					],
@@ -60,4 +61,29 @@ function geol_devices() {
 		'tablets' => __( "Tablet", 'geol' ),
 		'desktop' => __( "Dekstop", 'geol' ),
 	] );
+}
+
+/**
+ * Return the format to selectize
+ * @return array values
+ */
+function format_selectize($data, $format = 'countries') {
+
+	$output = array();
+
+	switch($format) {
+		case 'countries' :
+				foreach($data as $list) {
+					$output[] = array( 'text' => $list->country, 'value' => $list->iso_code );
+				}
+				break;
+
+		case 'regions' :
+				foreach($data as $list) {
+					$output[] = array( 'text' => $list['name'], 'value' => $list['name'] );
+				}
+				break;
+	}
+
+	return $output;
 }

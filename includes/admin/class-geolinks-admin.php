@@ -59,11 +59,19 @@ class GeoLinks_Admin {
 
 		wp_enqueue_style( 'geol-admin-css', GEOL_PLUGIN_URL . 'includes/admin/css/geol-admin.css', [], $this->version, 'all' );
 
+		$geowp = geot_settings();
+		$regions = !empty( $geowp['region'] ) ? $geowp['region'] : array();
+
+		$list_countries = format_selectize(geot_countries(),'countries');
+		$list_regions = format_selectize($regions,'regions');
+
 		wp_localize_script( 'geol-admin-js', 'geol_var',
 			[
 				'ajax_url'	=> admin_url( 'admin-ajax.php' ),
 				'nonce'		=> wp_create_nonce( 'geol_nonce' ),
 				'post_id'	=> $post->ID,
+				'countries'	=> $list_countries,
+				'regions'	=> $list_regions,
 			]
 		);
 
