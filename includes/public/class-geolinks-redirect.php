@@ -51,11 +51,12 @@ class Geol_Redirects {
 
 		if ( is_singular( 'geol_cpt' ) ) {
 			update_option('aabbtest8','entro8');
+
 			$post_id	= get_the_id();
 			$opts 		= geol_options( $post_id );
 			$settings 	= geol_settings();
 
-			$this->count_click('click', $post_id, $opts);
+			$this->count_click('click', $post_id);
 			
 			// check redirections to see if we have any match
 			foreach ( $opts['dest'] as $key => $redirect ) {
@@ -70,8 +71,8 @@ class Geol_Redirects {
 						return;
 					}
 
-					$this->count_click('match', $post_id, $opts);
-					$this->count_click('dest', $post_id, $opts, $key);
+					$this->count_click('match', $post_id);
+					$this->count_click('dest', $post_id, $key);
 
 					wp_redirect( esc_url( $redirect['url'] ), $opts['status_code'] );
 					exit();
@@ -137,7 +138,9 @@ class Geol_Redirects {
 	}
 
 
-	function count_click($field, $post_id, $opts, $dest_key = '') {
+	function count_click($field, $post_id, $dest_key = '') {
+
+		$opts = geol_options( $post_id );
 
 		switch($field) {
 			case 'click' :

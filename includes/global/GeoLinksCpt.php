@@ -95,8 +95,10 @@ class GeoLinksCpt {
 			$new_column[ $key ] = $value;
 
 			if ( $key == 'title' ) {
-				$new_column['source_url'] = __( 'Destination URL', 'geol' );
-				$new_column['count_dest'] = __( 'Destination Num', 'geol' );
+				$new_column['source_url']	= __( 'Destination URL', 'geol' );
+				$new_column['count_click']	= __( 'Click Counter', 'geol' );
+				$new_column['count_match']	= __( 'Match Counter', 'geol' );
+				$new_column['num_dest']		= __( 'Destination Num', 'geol' );
 			}
 		}
 
@@ -123,7 +125,13 @@ class GeoLinksCpt {
 			case 'source_url' :
 				$value_column = site_url( $opts['source_slug'] );
 				break;
-			case 'count_dest' :
+			case 'count_click' :
+				$value_column = $opts['count_click'];
+				break;
+			case 'count_match' :
+				$value_column = $opts['count_match'];
+				break;
+			case 'num_dest' :
 				$value_column = count( $opts['dest'] );
 				break;
 			default:
@@ -220,6 +228,7 @@ class GeoLinksCpt {
 		unset( $_POST['geol'] );
 
 		$post = get_post( $post_id );
+		$outs = geol_options($post_id);
 
 		if ( isset( $post->post_name ) ) {
 			$source_slug          = sanitize_title( $opts['source_slug'] );
@@ -229,11 +238,10 @@ class GeoLinksCpt {
 
 		$input['status_code'] = is_numeric( $opts['status_code'] ) ? sanitize_title( $opts['status_code'] ) : '302';
 
-		if( is_numeric($post_id) ) {
-			$click = geol_options($post_id);
-			$input['count_click'] = isset( $click['count_click'] ) ? $click['count_click'] : 0;
-			$input['count_match'] = isset( $click['count_match'] ) ? $click['count_match'] : 0;
-		}
+		// Counters
+		$input['count_click'] = isset( $outs['count_click'] ) ? $outs['count_click'] : 0;
+		$input['count_match'] = isset( $outs['count_match'] ) ? $outs['count_match'] : 0;
+
 
 		if ( is_array( $opts['dest'] ) && count( $opts['dest'] ) > 0 ) {
 			$i = 0;
@@ -246,8 +254,7 @@ class GeoLinksCpt {
 				$input['dest'][ $key ]['device']  = esc_html( $data['device'] );
 				$input['dest'][ $key ]['ref']     = esc_url( $data['ref'] );
 
-				if( is_numeric($post_id) )
-					$input['dest'][ $key ]['count_dest'] = isset( $click['dest'][$key]['count_dest'] ) ? $click['dest'][$key]['count_dest'] : 0;
+				$input['dest'][ $key ]['count_dest'] = isset( $outs['dest'][ $key ]['count_dest'] ) ? $outs['dest'][ $key ]['count_dest'] : 0;
 				$i ++;
 			}
 		}

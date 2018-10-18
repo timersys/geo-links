@@ -46,6 +46,9 @@ class GeoLinks_Settings {
 			update_option( 'geol_settings', $settings );
 
 			GeoLinks_Permalinks::set_flush_needed();
+
+			wp_redirect(admin_url('admin.php?page=geol-settings'));
+			exit();
 		}
 	}
 }

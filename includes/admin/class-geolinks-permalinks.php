@@ -26,6 +26,7 @@ class GeoLinks_Permalinks {
 	 * @since    2.0.1
 	 */
 	public static function check_if_flush_needed() {
+
 		if ( '1' === get_option( 'geol_flush', '1' ) ) {
 			flush_rewrite_rules();
 			update_option( 'geol_flush', '0' );

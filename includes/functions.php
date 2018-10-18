@@ -28,6 +28,8 @@ function geol_options( $id ) {
 	$defaults = apply_filters( 'geol/metaboxes/defaults', [
 			'source_slug' => '',
 			'status_code' => '302',
+			'count_click' => 0,
+			'count_match' => 0,
 			'dest'        => [
 				'dest_0' =>
 					[
@@ -37,6 +39,7 @@ function geol_options( $id ) {
 						'state'		=> '',
 						'city'		=> '',
 						'device'	=> '',
+						'count_dest' => 0,
 					],
 			],
 		]
