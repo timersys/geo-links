@@ -56,44 +56,28 @@ class GeoLinks_Admin {
 	public function enqueue_scripts() {
 		global $pagenow, $post;
 
-		if( !in_array( $pagenow, [ 'post-new.php', 'edit.php', 'post.php' ] ) )
+		if( get_post_type() !== 'geol_cpt' || !in_array( $pagenow, [ 'post-new.php', 'edit.php', 'post.php' ] ) )
 			return;
 
-		if ( get_post_type() === 'geol_cpt' ) {
+		wp_enqueue_script( 'geol-admin-js', plugin_dir_url( __FILE__ ) . 'js/geol-admin.js', [ 'jquery' ], $this->version, false );
 
-			wp_enqueue_script( 'geol-admin-js', plugin_dir_url( __FILE__ ) . 'js/geol-admin.js', [ 'jquery' ], $this->version, false );
+		wp_enqueue_style( 'geol-admin-css', GEOL_PLUGIN_URL . 'includes/admin/css/geol-admin.css', [], $this->version, 'all' );
 
-			wp_enqueue_style( 'geol-admin-css', GEOL_PLUGIN_URL . 'includes/admin/css/geol-admin.css', [], $this->version, 'all' );
+		$geowp = geot_settings();
+		$regions = !empty( $geowp['region'] ) ? $geowp['region'] : array();
 
-			$geowp = geot_settings();
-			$regions = !empty( $geowp['region'] ) ? $geowp['region'] : array();
+		$list_countries = format_selectize(geot_countries(),'countries');
+		$list_regions = format_selectize($regions,'regions');
 
-			$list_countries = format_selectize(geot_countries(),'countries');
-			$list_regions = format_selectize($regions,'regions');
-
-			wp_localize_script( 'geol-admin-js', 'geol_var',
-				[
-					'ajax_url'	=> admin_url( 'admin-ajax.php' ),
-					'nonce'		=> wp_create_nonce( 'geol_nonce' ),
-					'post_id'	=> $post->ID,
-					'countries'	=> $list_countries,
-					'regions'	=> $list_regions,
-				]
-			);
-
-		} /*else {
-
-			wp_enqueue_script( 'geol-tinymce-js', plugin_dir_url( __FILE__ ) . 'js/geol-tinymce.js', [ 'jquery' ], $this->version, false );
-
-			wp_localize_script( 'geol-tinymce-js', 'geol_var',
-				[
-					'ajax_url'	=> admin_url( 'admin-ajax.php' ),
-					'nonce'		=> wp_create_nonce( 'geol_nonce' ),
-					'img'		=> GEOL_PLUGIN_URL . 'includes/admin/img/geol_link.png',
-				]
-			);
-
-		}*/
+		wp_localize_script( 'geol-admin-js', 'geol_var',
+			[
+				'ajax_url'	=> admin_url( 'admin-ajax.php' ),
+				'nonce'		=> wp_create_nonce( 'geol_nonce' ),
+				'post_id'	=> $post->ID,
+				'countries'	=> $list_countries,
+				'regions'	=> $list_regions,
+			]
+		);
 	}
 
 
