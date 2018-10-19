@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<th><label for="source_slug"><?php _e( 'Link Slug', 'geol' ); ?></label></th>
 		<td id="source">
 			<input type="text" id="source_slug" class="widefat" name="geol[source_slug]"
-			       value="<?php echo $opts['source_slug']; ?>"/>
+			       value="<?php echo isset($opts['source_slug']) ? esc_attr($opts['source_slug']) : ''; ?>"/>
 			<span id="source_msg"></span>
 			<p class="help"><?php echo site_url( $settings['goto_page'] ); ?>/<span><?php echo $opts['source_slug']; ?></span></p>
 		</td>
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<th><label for="status_code"><?php _e( 'Redirection code', 'geol' ); ?></label></th>
 		<td id="code">
 			<input type="number" id="status_code" class="widefat" name="geol[status_code]"
-			       value="<?php echo $opts['status_code']; ?>"/>
+			       value="<?php echo isset($opts['status_code']) ? esc_attr($opts['status_code']) : ''; ?>"/>
 			<p class="help"><?php _e('Add redirection code. Default to 302','geol'); ?></p>
 		</td>
 	</tr>
@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<th><label for="geol_dest"><?php _e( 'Destination URL', 'geol' ); ?></label></th>
 						<td>
 							<input type="text" class="widefat" name="geol[dest][<?php echo $key; ?>][url]"
-							       value="<?php echo esc_attr( $data['url'] ); ?>"
+							       value="<?php echo isset($data['url']) ? esc_attr( $data['url'] ) : ''; ?>"
 							       placeholder="<?php _e( 'Enter you destination url', 'geol' ); ?>"/>
 							<p class="help-text"><?php _e( 'Where the user is going to be redirected if rules below match', 'geol' ); ?></p>
 						</td>
@@ -89,7 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td>
 							<input type="text" class="widefat"
 							       name="geol[dest][<?php echo $key; ?>][cities]"
-							       value="<?php echo esc_attr( $data['cities'] ); ?>"
+							       value="<?php echo isset($data['cities']) ? esc_attr( $data['cities'] ) : ''; ?>"
 							       placeholder="<?php _e( 'Cities / Regions', 'geol' ); ?>"/>
 							<p class="help-text"><?php _e( 'Type city names or city regions, comma separated', 'geol' ); ?></p>
 						</td>
@@ -99,7 +99,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td>
 							<input type="text" class="widefat"
 							       name="geol[dest][<?php echo $key; ?>][states]"
-							       value="<?php echo esc_attr( $data['states'] ); ?>"
+							       value="<?php echo isset($data['states']) ? esc_attr( $data['states'] ) : ''; ?>"
 							       placeholder="<?php _e( 'States', 'geol' ); ?>"/>
 							<p class="help-text"><?php _e( 'Type state iso codes, comma separated', 'geol' ); ?></p>
 						</td>
