@@ -57,7 +57,9 @@ jQuery(document).on('keypress','td#source input', function(e) {
 jQuery(document).on('focusout','input#source_slug', function() {
 
 	var source_slug = jQuery(this).val();
-
+	// dont run ajax if empty
+	if(source_slug.length < 3 )
+		return;
 	jQuery.post(geol_var.ajax_url, 	{
 				action: 'geol_source',
 				slug : source_slug,
