@@ -191,8 +191,8 @@ class GeoLinksCpt {
 
 		$geowp     = geot_settings();
 		$defaults = [
-			'region'                    => [['name','countries']],
-			'city_region'               => [['name','cities']],
+			'region'                    => [],
+			'city_region'               => [],
 			'cache_mode'                => '0',
 			'ajax_mode'                 => '0',
 			'debug_mode'                => '0',
