@@ -42,6 +42,27 @@ if ( ! defined( 'GEOTROOT_PLUGIN_FILE' ) ) {
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-geolinks.php';
 
 /**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-geolinks-activator.php
+ */
+function activate_geolinks() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geolinks-activator.php';
+	GeoLinks_Activator::activate();
+}
+
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-geolinks-deactivator.php
+ */
+function deactivate_geolinks() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geolinks-deactivator.php';
+	GeoLinks_Deactivator::deactivate();
+}
+
+register_activation_hook( __FILE__, 'activate_geolinks' );
+register_deactivation_hook( __FILE__, 'deactivate_geolinks' );
+
+/**
  * Store the plugin global
  */
 global $geol;
