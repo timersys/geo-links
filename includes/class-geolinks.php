@@ -133,10 +133,11 @@ class GeoLinks {
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/autoload.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/functions.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geolinks-i18n.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/global/GeoLinksCpt.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/global/class-geolinks-cpt.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/admin/class-geolinks-permalinks.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/admin/class-geolinks-settings.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/admin/class-geolinks-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/admin/class-geolinks-ajax.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/public/class-geolinks-redirect.php';
 	}
 
