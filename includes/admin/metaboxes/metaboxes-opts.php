@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<input type="text" id="source_slug" class="widefat" name="geol[source_slug]"
 			       value="<?php echo isset($opts['source_slug']) ? esc_attr($opts['source_slug']) : ''; ?>"/>
 			<span id="source_msg"></span>
-			<p class="help"><?php echo site_url( $settings['goto_page'] ); ?>/<span><?php echo $opts['source_slug']; ?></span></p>
+			<p class="help"><strong>URL:</strong> <?php echo site_url( $settings['goto_page'] ); ?>/<span><?php echo $opts['source_slug']; ?></span><br><strong>SHORTCODE:</strong> [geo-link slug="<span><?php echo $opts['source_slug']; ?></span>" nofollow="yes" noreferrer="no"]...[/geo-link]</p>
 		</td>
 	</tr>
 
@@ -50,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td>
 							<input type="text" class="widefat" name="geol[dest][<?php echo $key; ?>][url]"
 							       value="<?php echo isset($data['url']) ? esc_attr( $data['url'] ) : ''; ?>"
-							       placeholder="<?php _e( 'Enter you destination url', 'geol' ); ?>"/>
+							       placeholder="<?php _e( 'https://:', 'geol' ); ?>"/>
 							<p class="help-text"><?php _e( 'Where the user is going to be redirected if rules below match', 'geol' ); ?></p>
 						</td>
 					</tr>
