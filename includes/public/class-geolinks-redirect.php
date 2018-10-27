@@ -178,6 +178,9 @@ class Geol_Redirects {
 	 *
 	 * @param
 	 *
+	 * @param string $content
+	 *
+	 * @return string
 	 * @since 1.0.0
 	 */
 	public function add_shortcode($atts, $content = '') {
@@ -187,12 +190,12 @@ class Geol_Redirects {
 			'noreferrer'	=> 'no',
 		), $atts, 'geo-link' );
 
-		$return = '';
+		$return = '{Slug is not matching any Geo link}';
 		$post = get_page_by_path($atts['slug'], OBJECT, 'geol_cpt');
 
 		if( isset($post->ID) ) {
 
-			$rel = array();
+			$rel = apply_filters( 'geolinks/link_rel_attr', ['noopener'] );
 			$content = !empty($content) ? $content : 'Geo Link';
 			$settings = geol_settings();
 			$opts = geol_options($post->ID);
@@ -211,7 +214,7 @@ class Geol_Redirects {
 			// Output
 			$link =  trailingslashit( site_url( $settings['goto_page'] ) ) . $opts['source_slug'];
 
-			$return = '<a href="' . $link . '" '.$attr_rel.' >' . $content . '</a>';
+			$return = '<a href="' . esc_url( $link ) . '" '. esc_attr( $attr_rel ) .' >' . do_shortcode($content) . '</a>';
 		}
 
 		return $return;
