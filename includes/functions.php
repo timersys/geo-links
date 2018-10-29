@@ -6,8 +6,8 @@
  */
 function geol_settings() {
 	$defaults = apply_filters( 'geol/settings_page/defaults', [
-			'ajax_mode' => '0',
 			'goto_page' => 'goto',
+			'opt_stats' => '1',
 		]
 	);
 
@@ -26,10 +26,11 @@ function geol_settings() {
  */
 function geol_options( $id ) {
 	$defaults = apply_filters( 'geol/metaboxes/defaults', [
-			'source_slug' => '',
-			'status_code' => '302',
-			'count_click' => 0,
-			'count_match' => 0,
+			'source_slug'	=> '',
+			'status_code'	=> '302',
+			'dest_default'	=> '',
+			'click_default'	=> 0,
+			'count_click'	=> 0,
 			'dest'        => [
 				'dest_0' =>
 					[

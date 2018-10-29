@@ -3,28 +3,18 @@ div.geol_border {
 	padding: 0 20px;
 }
 
-a.geol_symbol {
-	border: 1px solid #CCC;
-	border-radius: 20px;
-	text-decoration: none;
-	background-color: #FFF;
-	color: #AAA;
-	margin: 5px 0;
-    display: block;
-}
-
-a.geol_plus {
-	padding: 0px 4px;
-}
-a.geol_less {
-	padding: 0px 6px;
-}
-
-a.geol_symbol:hover {
-	border: 1px solid #AAA;
-	color: red;
-}
-
 table.geol_repeater tr#dest_0 td a.geol_less {
 	visibility: hidden;
+}
+
+.box_plus, .box_less {
+	padding: 2px 0;
+}
+
+table.wp-list-table .column-count_click {
+	width: 8%;
+}
+
+table.wp-list-table .column-shortcode input {
+	width: 100%;
 }

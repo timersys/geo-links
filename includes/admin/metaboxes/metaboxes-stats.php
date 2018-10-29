@@ -10,12 +10,26 @@ wp_nonce_field( 'geol_options', 'geol_options_nonce' );
 		<tr><th><?php _e('Destinations','geol'); ?></th><th><?php _e('Clicks','geol'); ?></th></tr>
 	</thead>
 	<tbody>
-	<?php foreach ( $opts['dest'] as $key => $data ) : ?>
+	<?php if( isset( $opts['dest'] ) ) : ?>
+		<?php foreach ( $opts['dest'] as $key => $data ) : ?>
+			<tr>
+				<td class="geol_stats_url"><?php echo $data['url']; ?></td>
+				<td class="geol_stats_count"><?php echo $data['count_dest']; ?></td>
+			</tr>
+		<?php endforeach; ?>
+	<?php endif; ?>
+
+	<?php if( !empty($opts['dest_default']) ) : ?>
 		<tr>
-			<td class="geol_stats_url"><?php echo $data['url']; ?></td>
-			<td class="geol_stats_count"><?php echo $data['count_dest']; ?></td>
+			<td class="geol_stats_url"><strong><?php _e('Default','geol'); ?> :</strong> <?php echo $opts['dest_default']; ?></td>
+			<td class="geol_stats_count"><?php echo $opts['click_default']; ?></td>
 		</tr>
-	<?php endforeach; ?>
+	<?php else : ?>
+		<tr>
+			<td class="geol_stats_url"><strong><?php _e('Default','geol'); ?> :</strong> <?php echo site_url(); ?></td>
+			<td class="geol_stats_count"><?php echo $opts['click_default']; ?></td>
+		</tr>
+	<?php endif; ?>
 	</tbody>
 </table>
 

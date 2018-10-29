@@ -107,12 +107,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</table>
 			</div>
 		</td>
-		<td style="padding:1px;">
-			<a href="" class="button geol_plus" title="Add">+ ADD</a>
+		<td>
+			<div class="box_plus">
+				<a href="" class="button geol_plus" title="<?php _e('Add','geol'); ?>">
+					<?php _e('+ ADD','geol'); ?>
+				</a>
+			</div>
+			<div class="box_less">
+				<a href="" class="button geol_less" title="<?php _e('Remove','geol'); ?>">
+					<?php _e('- REMOVE','geol'); ?>
+				</a>
+			</div>
 		</td>
-		<td style="padding:1px;">
-			<a href="" class="geol_symbol geol_less" title="Remove">-</a>
-		</td>
+
 	</tr>
 	</table>
 

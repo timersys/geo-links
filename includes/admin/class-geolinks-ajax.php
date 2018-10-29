@@ -70,6 +70,10 @@ class Geolinks_Ajax {
 	}
 
 
+	/**
+	 * Reset Stats
+	 * @since 1.0.0
+	 */
 	function reset_stats() {
 
 		if ( ! isset( $_POST['post_id'] ) || ! isset( $_POST['wpnonce'] ) ||
@@ -85,9 +89,12 @@ class Geolinks_Ajax {
 		if ( $opts['dest'] ) {
 			foreach($opts['dest'] as $key => $data )
 				$opts['dest'][$key]['count_dest'] = 0;
-
-			update_post_meta( $post_id, 'geol_options', apply_filters( 'geol/metaboxes/reset_stats', $opts ) );
 		}
+
+		$opts['click_default'] = 0;
+		$opts['count_click'] = 0;
+
+		update_post_meta( $post_id, 'geol_options', apply_filters( 'geol/metaboxes/reset_stats', $opts ) );
 
 		wp_send_json( [ 'status' => 'ok' ] );
 	}

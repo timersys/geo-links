@@ -64,17 +64,26 @@ class Geol_Redirects {
 				if ( $this->validate_redirection( $redirect ) ) {
 					
 					// last change to abort
-					if ( apply_filters( 'geol/cancel_redirect', false, $redirect, $post_id ) ) {
+					if ( apply_filters( 'geol/redirect_cancel', false, $redirect, $post_id ) ) {
 						return;
 					}
 
-					$this->count_click('match', $post_id);
 					$this->count_click('dest', $post_id, $key);
 
 					wp_redirect( esc_url( $redirect['url'] ), $opts['status_code'] );
 					exit();
 				}
 			}
+
+			if( isset($opts['dest_default']) && !empty( $opts['dest_default'] ) )
+				$url_default = apply_filters('geol/redirect_default', esc_url( $opts['dest_default']), $post_id );
+			else
+				$url_default = site_url();
+
+			$this->count_click('default', $post_id);
+
+			wp_redirect( $url_default, $opts['status_code'] );
+			exit();
 
 		}
 	}
@@ -149,13 +158,14 @@ class Geol_Redirects {
 						$opts['count_click'] = 1;
 
 					break;
-			case 'match' :
-					if( isset( $opts['count_match'] ) && is_numeric( $opts['count_match'] ) )
-						$opts['count_match']++;
+			case 'default' :
+					if( isset( $opts['click_default'] ) && is_numeric( $opts['click_default'] ) )
+						$opts['click_default']++;
 					else
-						$opts['count_match'] = 1;
+						$opts['click_default'] = 1;
 
 					break;
+
 			case 'dest' :
 					if( isset( $opts['dest'][$dest_key]['count_dest'] ) &&
 						is_numeric( $opts['dest'][$dest_key]['count_dest'] )

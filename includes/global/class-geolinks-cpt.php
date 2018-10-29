@@ -85,6 +85,7 @@ class Geolinks_Cpt {
 	 */
 	function set_custom_cpt_columns( $columns ) {
 
+		$settings 	= geol_settings();
 		$new_column = [];
 
 		foreach ( $columns as $key => $value ) {
@@ -93,9 +94,10 @@ class Geolinks_Cpt {
 
 			if ( $key == 'title' ) {
 				$new_column['source_url']	= __( 'Destination URL', 'geol' );
-				$new_column['count_click']	= __( 'Click Counter', 'geol' );
-				$new_column['count_match']	= __( 'Match Counter', 'geol' );
-				$new_column['num_dest']		= __( 'Destination Num', 'geol' );
+				$new_column['shortcode']	= __( 'Shortcode', 'geol' );
+
+				if( isset( $settings['opt_stats'] ) && $settings['opt_stats'] == 1 )
+					$new_column['count_click']	= __( 'Total Click', 'geol' );
 			}
 		}
 
@@ -125,11 +127,8 @@ class Geolinks_Cpt {
 			case 'count_click' :
 				$value_column = $opts['count_click'];
 				break;
-			case 'count_match' :
-				$value_column = $opts['count_match'];
-				break;
-			case 'num_dest' :
-				$value_column = count( $opts['dest'] );
+			case 'shortcode' :
+				$value_column = '<input type="text" value="[geo-link slug=&quot;'.$opts['source_slug'].'&quot; nofollow=&quot;yes&quot; noreferrer=&quot;no&quot;]...[/geo-link]" readonly />';
 				break;
 			default:
 				$column;
@@ -177,14 +176,20 @@ class Geolinks_Cpt {
 			'normal',
 			'core'
 		);
-		add_meta_box(
-			'geol-stats',
-			__( 'Stats', 'geol' ),
-			[ $this, 'geol_stats' ],
-			'geol_cpt',
-			'normal',
-			'core'
-		);
+
+		$settings = geol_settings();
+
+		if( isset($settings['opt_stats']) && $settings['opt_stats'] == 1 ) {
+		
+			add_meta_box(
+				'geol-stats',
+				__( 'Stats', 'geol' ),
+				[ $this, 'geol_stats' ],
+				'geol_cpt',
+				'normal',
+				'core'
+			);
+		}
 	}
 
 
@@ -258,6 +263,7 @@ class Geolinks_Cpt {
 
 		$post = get_post( $post_id );
 		$outs = geol_options($post_id);
+		$settings = geol_settings();
 
 		if ( isset( $post->post_name ) ) {
 			$source_slug          = sanitize_title( $opts['source_slug'] );
@@ -267,9 +273,13 @@ class Geolinks_Cpt {
 
 		$input['status_code'] = is_numeric( $opts['status_code'] ) ? sanitize_title( $opts['status_code'] ) : '302';
 
+		$input['dest_default'] = !empty( $opts['dest_default'] ) ? esc_url( $opts['dest_default'] ) : '';
+
 		// Counters
-		$input['count_click'] = isset( $outs['count_click'] ) ? $outs['count_click'] : 0;
-		$input['count_match'] = isset( $outs['count_match'] ) ? $outs['count_match'] : 0;
+		if( isset($settings['opt_stats']) && $settings['opt_stats'] == 1 ) {
+			$input['count_click'] = isset( $outs['count_click'] ) ? $outs['count_click'] : 0;
+			$input['click_default'] = isset( $outs['click_default'] ) ? $outs['click_default'] : 0;
+		}
 
 
 		if ( is_array( $opts['dest'] ) && count( $opts['dest'] ) > 0 ) {
@@ -284,7 +294,8 @@ class Geolinks_Cpt {
 				$input['dest'][ $key ]['device']	= esc_html( $data['device'] );
 				$input['dest'][ $key ]['ref']		= esc_url( $data['ref'] );
 
-				$input['dest'][ $key ]['count_dest'] = isset( $outs['dest'][ $key ]['count_dest'] ) ? $outs['dest'][ $key ]['count_dest'] : 0;
+				if( isset($settings['opt_stats']) && $settings['opt_stats'] == 1 )
+					$input['dest'][ $key ]['count_dest'] = isset( $outs['dest'][ $key ]['count_dest'] ) ? $outs['dest'][ $key ]['count_dest'] : 0;
 				$i ++;
 			}
 		}

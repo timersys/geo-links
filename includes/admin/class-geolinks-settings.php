@@ -43,6 +43,8 @@ class GeoLinks_Settings {
 
 			$settings = esc_sql( $_POST['geol_settings'] );
 
+			$settings['opt_stats'] = isset($settings['opt_stats']) ? $settings['opt_stats'] : 0;
+
 			update_option( 'geol_settings', $settings );
 
 			GeoLinks_Permalinks::set_flush_needed();
