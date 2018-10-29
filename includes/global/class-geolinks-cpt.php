@@ -171,7 +171,7 @@ class Geolinks_Cpt {
 
 		add_meta_box(
 			'geol-urls',
-			__( 'Urls', 'geol' ),
+			__( 'Destinations', 'geol' ),
 			[ $this, 'geol_urls' ],
 			'geol_cpt',
 			'normal',
@@ -200,31 +200,23 @@ class Geolinks_Cpt {
 
 		$settings = geol_settings();
 		$opts     = geol_options( $post->ID );
-		$geowp     = geot_settings();
 
 		include GEOL_PLUGIN_DIR . '/includes/admin/metaboxes/metaboxes-opts.php';
 	}
 
 	public function geol_urls( $post, $metabox ) {
 
-		$settings = geol_settings();
-		$opts     = geol_options( $post->ID );
-		$devices  = geol_devices();
-		$countries = geot_countries();
-
-		$geowp     = geot_settings();
+		$opts 		= geol_options( $post->ID );
+		$devices 	= geol_devices();
+		$countries 	= geot_countries();
+		$geowp 		= geot_settings();
 
 		include GEOL_PLUGIN_DIR . '/includes/admin/metaboxes/metaboxes-urls.php';
 	}
 
 	public function geol_stats( $post, $metabox ) {
 
-		$settings = geol_settings();
 		$opts     = geol_options( $post->ID );
-		$devices  = geol_devices();
-		$countries = geot_countries();
-
-		$geowp     = geot_settings();
 
 		include GEOL_PLUGIN_DIR . '/includes/admin/metaboxes/metaboxes-stats.php';
 	}

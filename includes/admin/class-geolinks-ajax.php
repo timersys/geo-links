@@ -7,6 +7,7 @@
 class Geolinks_Ajax {
 	public function __construct() {
 		add_action( 'wp_ajax_geol_source', [ $this, 'validate_source' ] );
+		add_action( 'wp_ajax_geol_reset', [ $this, 'reset_stats' ] );
 	}
 
 	/**
@@ -66,6 +67,29 @@ class Geolinks_Ajax {
 		}
 
 		wp_send_json( $output );
+	}
+
+
+	function reset_stats() {
+
+		if ( ! isset( $_POST['post_id'] ) || ! isset( $_POST['wpnonce'] ) ||
+		     ! wp_verify_nonce( $_POST['wpnonce'], 'geol_nonce' )
+		) {
+			wp_send_json( [ 'status' => 'failed' ] );
+		}
+
+		$post_id = esc_html($_POST['post_id']);
+
+		$opts = geol_options( $post_id );
+
+		if ( $opts['dest'] ) {
+			foreach($opts['dest'] as $key => $data )
+				$opts['dest'][$key]['count_dest'] = 0;
+
+			update_post_meta( $post_id, 'geol_options', apply_filters( 'geol/metaboxes/reset_stats', $opts ) );
+		}
+
+		wp_send_json( [ 'status' => 'ok' ] );
 	}
 }
 new Geolinks_Ajax();

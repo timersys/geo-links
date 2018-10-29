@@ -57,9 +57,11 @@ jQuery(document).on('keypress','td#source input', function(e) {
 jQuery(document).on('focusout','input#source_slug', function() {
 
 	var source_slug = jQuery(this).val();
+	
 	// dont run ajax if empty
 	if(source_slug.length < 3 )
 		return;
+
 	jQuery.post(geol_var.ajax_url, 	{
 				action: 'geol_source',
 				slug : source_slug,
@@ -79,5 +81,27 @@ jQuery(document).on('focusout','input#source_slug', function() {
 							<span>';
 
 				jQuery('span#source_msg').html(msg_total);
+		});
+});
+
+
+jQuery(document).on('click', '.geol_reset', function(e) {
+	e.preventDefault();
+
+	jQuery('span.geol_msg_reset').html(geol_var.icon_load);
+
+	jQuery.post(geol_var.ajax_url, 	{
+				action: 'geol_reset',
+				post_id: geol_var.post_id,
+				wpnonce: geol_var.nonce				
+			},
+			function(response) {
+				
+				if( response.status == 'ok' ) {
+					jQuery('td.geol_stats_count').html(0);
+					jQuery('span.geol_msg_reset').html(geol_var.msg_ok);
+				} else {
+					jQuery('span.geol_msg_reset').html(geol_var.msg_fail);
+				}
 		});
 });

@@ -4,38 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<table class="form-table">
-
-	<?php do_action( 'geol/metaboxes/before_source', $opts ); ?>
-
-	<tr valign="top">
-		<th><label for="source_slug"><?php _e( 'Link Slug', 'geol' ); ?></label></th>
-		<td id="source">
-			<input type="text" id="source_slug" class="widefat" name="geol[source_slug]"
-			       value="<?php echo isset($opts['source_slug']) ? esc_attr($opts['source_slug']) : ''; ?>"/>
-			<span id="source_msg"></span>
-			<p class="help"><strong>URL:</strong> <?php echo site_url( $settings['goto_page'] ); ?>/<span><?php echo $opts['source_slug']; ?></span><br><strong>SHORTCODE:</strong> [geo-link slug="<span><?php echo $opts['source_slug']; ?></span>" nofollow="yes" noreferrer="no"]...[/geo-link]</p>
-		</td>
-	</tr>
-
-	<tr valign="top">
-		<th><label for="status_code"><?php _e( 'Redirection code', 'geol' ); ?></label></th>
-		<td id="code">
-			<input type="number" id="status_code" class="widefat" name="geol[status_code]"
-			       value="<?php echo isset($opts['status_code']) ? esc_attr($opts['status_code']) : ''; ?>"/>
-			<p class="help"><?php _e('Add redirection code. Default to 302','geol'); ?></p>
-		</td>
-	</tr>
-
-	<?php do_action( 'geol/metaboxes/after_source', $opts ); ?>
-
-</table>
-
-<h3><?php _e( 'Destinations', 'geol' ); ?></h3>
 
 <?php if ( $opts['dest'] ) : ?>
 
-	<?php foreach ( $opts['dest'] as $key => $data ) : //$key = 'dest_'.$i; ?>
+	<?php foreach ( $opts['dest'] as $key => $data ) : ?>
 
 	<table class="form-table geol_repeater">
 	<tr id="<?php echo $key; ?>">

@@ -76,6 +76,9 @@ class GeoLinks_Admin {
 				'post_id'	=> $post->ID,
 				'countries'	=> $list_countries,
 				'regions'	=> $list_regions,
+				'msg_fail'	=> __('Failed','geol'),
+				'msg_ok'	=> __('Ok','geol'),
+				'icon_load'	=> '<img src="'.admin_url('images/loading.gif').'" />',
 			]
 		);
 	}
