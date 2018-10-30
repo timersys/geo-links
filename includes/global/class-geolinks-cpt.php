@@ -97,7 +97,7 @@ class Geolinks_Cpt {
 				$new_column['shortcode']	= __( 'Shortcode', 'geol' );
 
 				if( isset( $settings['opt_stats'] ) && $settings['opt_stats'] == 1 )
-					$new_column['count_click']	= __( 'Total Click', 'geol' );
+					$new_column['count_click']	= __( 'Total Clicks', 'geol' );
 			}
 		}
 
@@ -128,7 +128,7 @@ class Geolinks_Cpt {
 				$value_column = $opts['count_click'];
 				break;
 			case 'shortcode' :
-				$value_column = '<input type="text" value="[geo-link slug=&quot;'.$opts['source_slug'].'&quot; nofollow=&quot;yes&quot; noreferrer=&quot;no&quot;]...[/geo-link]" readonly />';
+				$value_column = '<input type="text" value="[geo-link slug=&quot;'. esc_attr__( $opts['source_slug'] ) .'&quot; nofollow=&quot;yes&quot; noreferrer=&quot;no&quot;]...[/geo-link]" readonly />';
 				break;
 			default:
 				$column;
