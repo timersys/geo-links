@@ -1,24 +1,27 @@
 <?php
 
+/**
+ * Class GeoLinks_Settings
+ */
 class GeoLinks_Settings {
-
+	/**
+	 * GeoLinks_Settings constructor.
+	 */
 	public function __construct() {
-
-		add_action( 'admin_menu', [ $this, 'add_settings_menu' ] );
+		add_filter('geot/settings_tabs', [$this, 'add_tab']);
+		add_action('geot/settings_geo-links_panel', [ $this, 'settings_page'] );
 		add_action( 'admin_init', [ $this, 'save_settings' ] );
 	}
 
 	/**
-	 * Add menu for Settings page of the plugin
-	 * @since  1.0.0
-	 * @return  void
+	 * Register tab for settings page
+	 * @param $tabs
+	 *
+	 * @return mixed
 	 */
-	public function add_settings_menu() {
-
-		add_submenu_page( 'geot-settings', 'GeoLinks Settings', 'GeoLinks Settings', apply_filters( 'geol/settings_page_role', 'manage_options' ), 'geol-settings', [
-			$this,
-			'settings_page',
-		] );
+	function add_tab( $tabs ){
+		$tabs['geo-links'] = ['name' => 'Geo Links'];
+		return $tabs;
 	}
 
 	/**
