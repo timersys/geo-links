@@ -300,8 +300,26 @@ class Geolinks_Cpt {
 			}
 		}
 
+		$input = apply_filters( 'geol/metaboxes/sanitized_options', $input, $post_id );
+
 		// save box settings
-		update_post_meta( $post_id, 'geol_options', apply_filters( 'geol/metaboxes/sanitized_options', $input ) );
+		update_post_meta( $post_id, 'geol_options', $input);
+
+
+		// Avoid Cache
+		if( isset($settings['avoid_cache']) &&
+			$settings['avoid_cache'] == 1 &&
+			$outs['source_slug'] != $input['source_slug']
+		 ) {
+
+			$slug_old = '/'.$settings['goto_page'].'/'.$outs['source_slug'];
+			$slug_new = '/'.$settings['goto_page'].'/'.$input['source_slug'];
+
+			if( $slug_old != $slug_new ) {
+				$this->setUrl_SuperCache( $slug_old, $slug_new, $post_id );
+				$this->setUrl_RocketCache( $slug_old, $slug_new, $post_id );
+			}
+		}
 	}
 
 	/**
@@ -357,6 +375,56 @@ class Geolinks_Cpt {
 
 		return $data;
 	}
+
+
+
+	function setUrl_SuperCache($slug_old, $slug_new, $post_id) {
+		if( !is_plugin_active('wp-super-cache/wp-cache.php') )
+			return false;
+
+		global $wp_cache_config_file, $cache_rejected_uri;
+
+		if( in_array($slug_new, $cache_rejected_uri) )
+			return false;
+
+		$input = '';
+		foreach ($cache_rejected_uri as $file) {
+			if( $slug_old == $file )
+				continue;
+
+			$input .= esc_html( $file ) . "\n";
+		}
+		$input .= esc_html( $slug_new ) . "\n";
+
+		$text = wp_cache_sanitize_value($input, $cache_rejected_uri);
+		wp_cache_replace_line('^ *\$cache_rejected_uri', "\$cache_rejected_uri = $text;", $wp_cache_config_file);
+
+		return true;
+	}
+
+
+	function setUrl_RocketCache($opts_old, $opts_new, $post_id) {
+
+		if( !is_plugin_active('wp-rocket/wp-rocket.php') )
+			return false;
+
+		$list_cache_reject_uri = (array)get_rocket_option( 'cache_reject_uri' );
+		$reverse_cache_reject_uri = array_flip( $list_cache_reject_uri );
+		//$path = $opts_new = rocket_clean_exclude_file( get_permalink( $post_id ) );
+
+		if( isset($reverse_cache_reject_uri[$opts_new]) )
+			return false;
+
+		if( isset($reverse_cache_reject_uri[$opts_old]) ) {
+			$key_delete = $reverse_cache_reject_uri[$opts_old];
+			unset($list_cache_reject_uri[$key_delete]);
+		}
+
+		array_push($list_cache_reject_uri, $opts_new);
+		update_rocket_option( 'cache_reject_uri', $list_cache_reject_uri );
+		rocket_generate_config_file();
+	}
+
 
 }
 
