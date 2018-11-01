@@ -23,28 +23,13 @@ class GeoLinks_Notices{
 	 * Show notice if cache plugin exists
 	 */
 	public function admin_notices() {
-		if( \GeotFunctions\is_caching_plugin_active() && ! get_option('geolinks-cache')) {
-			?>
-			<div class="geot-notice notice notice-error is-dismissible" data-notice-id="geolinks-cache">
-				<h3><i class=" dashicons-before dashicons-admin-site"></i> GeoLinks</h3>
-				<p>We detected that your have a cache plugin active.</p>
-				<p>Please be sure to whitelist the geol_cpt custom post type in your cache plugin.</p>
-			</div>
-			<script>
-                jQuery(document).on('click', '.geot-notice .notice-dismiss', function() {
-                    var notice_id = jQuery(this).parent('.geot-notice').data('notice-id');
-                    jQuery.ajax({
-                        url: ajaxurl,
-                        data: {
-                            action: 'dismiss_geot_notice',
-	                        notice: notice_id,
-                        }
-                    })
-
-                })
-			</script>
-			<?php
-		}
+		//if( \GeotFunctions\is_caching_plugin_active() && ! get_option('geolinks-cache')) {
+		if( (
+				is_plugin_active('wp-super-cache/wp-cache.php') ||
+				is_plugin_active('wp-rocket/wp-rocket.php')
+			) &&
+				! get_option('geolinks-cache')
+		) include_once GEOL_PLUGIN_DIR . 'includes/admin/partials/notice_cache.php';
 	}
 }
 new GeoLinks_Notices();
