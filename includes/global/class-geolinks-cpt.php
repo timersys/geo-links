@@ -423,6 +423,8 @@ class Geolinks_Cpt {
 		array_push($list_cache_reject_uri, $opts_new);
 		update_rocket_option( 'cache_reject_uri', $list_cache_reject_uri );
 		rocket_generate_config_file();
+
+		return true;
 	}
 
 
