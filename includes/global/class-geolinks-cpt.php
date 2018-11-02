@@ -305,20 +305,13 @@ class Geolinks_Cpt {
 		// save box settings
 		update_post_meta( $post_id, 'geol_options', $input);
 
-
 		// Avoid Cache
-		if( isset($settings['avoid_cache']) &&
-			$settings['avoid_cache'] == 1 &&
-			$outs['source_slug'] != $input['source_slug']
-		 ) {
+		$slug_old = '/'.$settings['goto_page'].'/'.$outs['source_slug'];
+		$slug_new = '/'.$settings['goto_page'].'/'.$input['source_slug'];
 
-			$slug_old = '/'.$settings['goto_page'].'/'.$outs['source_slug'];
-			$slug_new = '/'.$settings['goto_page'].'/'.$input['source_slug'];
-
-			if( $slug_old != $slug_new ) {
-				$this->setUrl_SuperCache( $slug_old, $slug_new, $post_id );
-				$this->setUrl_RocketCache( $slug_old, $slug_new, $post_id );
-			}
+		if( $slug_old != $slug_new ) {
+			$this->setUrl_SuperCache( $slug_old, $slug_new, $post_id );
+			$this->setUrl_RocketCache( $slug_old, $slug_new, $post_id );
 		}
 	}
 

@@ -7,7 +7,6 @@
 function geol_settings() {
 	$defaults = apply_filters( 'geol/settings_page/defaults', [
 			'goto_page' => 'goto',
-			'avoid_cache' => '0',
 			'opt_stats' => '1',
 		]
 	);

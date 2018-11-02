@@ -11,13 +11,6 @@
 				</td>
 			</tr>
 			<tr valign="top" class="">
-				<th><label for="opt_stats"><?php _e( 'Avoid cache plugins to GeoLinks', 'geol' ); ?></label></th>
-				<td colspan="3">
-					<input type="checkbox" name="geol_settings[avoid_cache]" value="1" <?php checked($opts['avoid_cache'],'1') ?> />
-					<p class="help"><?php _e( 'If checked, Geolink will save each link in the exclude cache plugins list. Compatible with WP Super Cache and WP Rocket.', 'geol' ); ?></p>
-				</td>
-			</tr>
-			<tr valign="top" class="">
 				<th><label for="opt_stats"><?php _e( 'Enable Stats', 'geol' ); ?></label></th>
 				<td colspan="3">
 					<input type="checkbox" name="geol_settings[opt_stats]" value="1" <?php checked($opts['opt_stats'],'1') ?> />

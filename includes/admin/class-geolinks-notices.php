@@ -23,13 +23,8 @@ class GeoLinks_Notices{
 	 * Show notice if cache plugin exists
 	 */
 	public function admin_notices() {
-		//if( \GeotFunctions\is_caching_plugin_active() && ! get_option('geolinks-cache')) {
-		if( (
-				is_plugin_active('wp-super-cache/wp-cache.php') ||
-				is_plugin_active('wp-rocket/wp-rocket.php')
-			) &&
-				! get_option('geolinks-cache')
-		) include_once GEOL_PLUGIN_DIR . 'includes/admin/partials/notice_cache.php';
+		if( \GeotFunctions\is_caching_plugin_active() && ! get_option('geolinks-cache'))
+			include_once GEOL_PLUGIN_DIR . 'includes/admin/partials/notice_cache.php';
 	}
 }
 new GeoLinks_Notices();

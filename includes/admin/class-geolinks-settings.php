@@ -8,9 +8,8 @@ class GeoLinks_Settings {
 	 * GeoLinks_Settings constructor.
 	 */
 	public function __construct() {
-		add_filter('geot/settings_tabs', [$this, 'add_tab']);
-		//add_action('geot/settings_geo-links_panel', [ $this, 'settings_page'] );
-		add_action('admin_menu', [ $this, 'add_settings_menu'] );
+		add_filter( 'geot/settings_tabs', [$this, 'add_tab']);
+		add_action( 'geot/settings_geo-links_panel', [ $this, 'settings_page'] );
 		add_action( 'admin_init', [ $this, 'save_settings' ] );
 	}
 
@@ -24,20 +23,6 @@ class GeoLinks_Settings {
 		$tabs['geo-links'] = ['name' => 'Geo Links'];
 		return $tabs;
 	}
-
-	/**
-	 * Add Settings Menu
-	 * @param $tabs
-	 *
-	 * @return mixed
-	 */
-	public function add_settings_menu() {
-
-        add_submenu_page( 'geot-settings', 'GeoLinks Settings', 'GeoLinks Settings', apply_filters( 'geol/settings_page_role', 'manage_options' ), 'geol-settings', [
-            $this,
-            'settings_page',
-        ] );
-    }
 
 
 	/**
@@ -61,6 +46,7 @@ class GeoLinks_Settings {
 		) {
 
 			$settings = esc_sql( $_POST['geol_settings'] );
+			$redirect = wp_unslash( $_POST['_wp_http_referer'] );
 
 			$settings['opt_stats'] = isset($settings['opt_stats']) ? $settings['opt_stats'] : 0;
 
@@ -68,7 +54,8 @@ class GeoLinks_Settings {
 
 			GeoLinks_Permalinks::set_flush_needed();
 
-			wp_redirect(admin_url('admin.php?page=geol-settings'));
+			// We redirected to the same place to refresh permalinks
+			wp_redirect(site_url($redirect);
 			exit();
 		}
 	}
