@@ -55,7 +55,7 @@ class GeoLinks_Settings {
 			GeoLinks_Permalinks::set_flush_needed();
 
 			// We redirected to the same place to refresh permalinks
-			wp_redirect(site_url($redirect);
+			wp_redirect(site_url($redirect));
 			exit();
 		}
 	}
