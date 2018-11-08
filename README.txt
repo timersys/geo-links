@@ -7,11 +7,11 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Create Geo Links in an incredible easy way and use different set of rules to match users
+Create Geo Links in an incredible easy way and use different set of rules to match users and cloak affiliate links
 
 == Description ==
 
-Geo links plugins it's much more than a simple affiliate redirect plugin. You can create powerful links, use cloaking and send users to different urls based on geotargeting
+Geo links plugin will let your create geo cloak links very easily. You will be able to redirect users to different final destinations based on geo rules.
 
 
 == Installation ==
