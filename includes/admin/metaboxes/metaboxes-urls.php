@@ -90,7 +90,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<option value="<?php echo $key_dev; ?>" <?php selected( $data['device'], $key_dev ) ?>><?php echo $name_dev; ?></option>
 								<?php endforeach; ?>
 							</select>
-							<p class="help-text"><?php __( 'Only redirect if using this device', 'geolinks' ); ?></p>
+							<p class="help-text"><?php _e( 'Only redirect if using this device', 'geolinks' ); ?></p>
 						</td>
 					</tr>
 
@@ -99,7 +99,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td>
 							<input type="text" class="widefat" name="geol[dest][<?php echo $key; ?>][ref]"
 							       value="<?php echo esc_attr( $data['ref'] ); ?>"/>
-							<p class="help-text"><?php __( 'Only redirect if user coming from this url', 'geolinks' ); ?></p>
+							<p class="help-text"><?php _e( 'Only redirect if user coming from this url', 'geolinks' ); ?></p>
 						</td>
 					</tr>
 
