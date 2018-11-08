@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<?php endforeach; ?>
 								<?php endif; ?>
 							</select>
-							<p class="help-text" style="margin-top: -20px;"><?php _e( 'Choose one or more regions', 'geol' ); ?></p>
+							<p class="help-text" style="margin-top: -20px;"><?php echo sprintf( __( 'Choose one or more regions. Edit regions in <a href="%s">here</a>', 'geol' ), admin_url('admin.php?page=geot-settings') ); ?></p>
 						</td>
 					</tr>
 					<tr>

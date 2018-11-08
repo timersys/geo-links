@@ -11,7 +11,10 @@ wp_nonce_field( 'geol_options', 'geol_options_nonce' );
 	</thead>
 	<tbody>
 	<?php if( isset( $opts['dest'] ) ) : ?>
-		<?php foreach ( $opts['dest'] as $key => $data ) : ?>
+		<?php foreach ( $opts['dest'] as $key => $data ) :
+			if( empty( $data['url'] ) )
+				continue;
+			?>
 			<tr>
 				<td class="geol_stats_url"><?php echo $data['url']; ?></td>
 				<td class="geol_stats_count"><?php echo $data['count_dest']; ?></td>

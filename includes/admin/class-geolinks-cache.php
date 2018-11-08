@@ -32,4 +32,3 @@ class Geolinks_Cache {
 }
 
 new Geolinks_Cache();
-?>
