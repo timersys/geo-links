@@ -1,7 +1,9 @@
 <div class="wrap geol-settings">
-	<h2>Geo Links v <?= GEOL_VERSION; ?></h2>
 	<form name="geol-settings" method="post" enctype="multipart/form-data">
 		<table class="form-table">
+			<tr valign="top" class="geot-settings-title">
+				<th colspan="3"><h3><?php _e( 'Geo Links settings:', 'geot' ); ?></h3></th>
+			</tr>
 			<tr valign="top" class="">
 				<th><label for="page_goto"><?php _e( 'Redirection slug', 'geol' ); ?></label></th>
 				<td colspan="3">
