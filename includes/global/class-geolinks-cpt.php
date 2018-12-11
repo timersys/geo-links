@@ -286,11 +286,11 @@ class Geolinks_Cpt {
 			foreach ( $opts['dest'] as $data ) {
 				$key                              = 'dest_' . $i;
 				$input['dest'][ $key ]['url']		= esc_url( $data['url'] );
-				$input['dest'][ $key ]['countries']	= array_map('esc_html', $data['countries'] );
-				$input['dest'][ $key ]['regions']	= array_map('esc_html', $data['regions'] );
-				$input['dest'][ $key ]['states']	= esc_html( $data['states'] );
-				$input['dest'][ $key ]['cities']	= esc_html( $data['cities'] );
-				$input['dest'][ $key ]['device']	= esc_html( $data['device'] );
+				$input['dest'][ $key ]['countries']	= is_array($data['countries']) ? array_map('esc_attr', $data['countries'] ) : [];
+				$input['dest'][ $key ]['regions']	= is_array($data['regions']) ? array_map('esc_attr', $data['regions'] ) : [];
+				$input['dest'][ $key ]['states']	= esc_attr( $data['states'] );
+				$input['dest'][ $key ]['cities']	= esc_attr( $data['cities'] );
+				$input['dest'][ $key ]['device']	= esc_attr( $data['device'] );
 				$input['dest'][ $key ]['ref']		= esc_url( $data['ref'] );
 
 				if( isset($settings['opt_stats']) && $settings['opt_stats'] == 1 )
