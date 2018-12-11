@@ -22,8 +22,9 @@ class Geolinks_Cache {
 		if( isset($post->ID) && get_post_type($post) == 'geol_cpt' ) {
 
 			// To WP Super Cache, W3TC and WP Rocket
-			define('DONOTCACHEPAGE', true);
-
+			if( !defined('DONOTCACHEPAGE') ) {
+				define( 'DONOTCACHEPAGE', true );
+			}
 			//Besides : WP Rocket
 			add_filter( 'do_rocket_generate_caching_files', '__return_false', 11 );
 			add_filter( 'rocket_override_donotcachepage', '__return_false', 11 );

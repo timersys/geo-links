@@ -43,8 +43,8 @@ class GeoLinks_Admin {
 		
 		add_action( 'init', [ $this, 'tinymce_init' ] );
 		add_action( 'in_admin_footer', [ $this, 'add_editor' ], 100 );
-		add_action( 'admin_head-post.php', [ $this, 'tinymce_varjs' ] );
-		add_action( 'admin_head-post-new.php', [ $this, 'tinymce_varjs' ] );
+		add_action( 'admin_head', [ $this, 'tinymce_varjs' ] );
+		add_action( 'admin_head', [ $this, 'tinymce_varjs' ] );
 	}
 
 
