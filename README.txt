@@ -2,8 +2,8 @@
 Contributors: timersys
 Donate link: https://timersys.com
 Tags: geo links,geotargeted links,affiliate links,geotargeting,geolite,maxmind
-Tested up to: 4.9.8
-Stable tag: 1.0.1.1
+Tested up to: 5.0.2
+Stable tag: 1.0.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,11 @@ Geo links plugin will let your create geo cloak links very easily. You will be a
 
 == Changelog ==
 
+
+= 1.0.1.2 =
+* Fixed php undefined errors
+* Reorganized settings tabs
+* Fixed uninstall script
 
 = 1.0.1.1 =
 * Hotfix for bug introduced in 1.0.1 ( Important update! )
