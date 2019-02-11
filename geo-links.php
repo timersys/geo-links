@@ -11,7 +11,7 @@
  * Plugin Name:       Geo Links
  * Plugin URI:        https://geotargetingwp.com/geo-links
  * Description:       Geo Links for WordPress will let you geo-target your affiliate links
- * Version:           1.0.1.2
+ * Version:           1.0.2
  * Author:            Timersys
  * Author URI:        https://geotargetingwp.com/geo-links
  * License:           GPL-2.0+
@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'GEOL_PLUGIN_FILE', __FILE__ );
-define( 'GEOL_VERSION', '1.0.1.2' );
+define( 'GEOL_VERSION', '1.0.2' );
 define( 'GEOL_DB_VERSION', '1.2' );
 define( 'GEOL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GEOL_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
