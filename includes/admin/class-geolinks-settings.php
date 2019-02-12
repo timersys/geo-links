@@ -30,7 +30,8 @@ class GeoLinks_Settings {
 	 * @since 1.0.3
 	 */
 	public function settings_page() {
-		$opts = geol_settings();
+		$opts 	= geol_settings();
+		$return	= 'admin.php?'.http_build_query( $_GET );
 
 		include GEOL_PLUGIN_DIR . 'includes/admin/settings/settings-page.php';
 	}
@@ -46,7 +47,7 @@ class GeoLinks_Settings {
 		) {
 
 			$settings = esc_sql( $_POST['geol_settings'] );
-			$redirect = wp_unslash( $_POST['_wp_http_referer'] );
+			$redirect = wp_unslash( $_POST['geol_return'] );
 
 			$settings['opt_stats'] = isset($settings['opt_stats']) ? $settings['opt_stats'] : 0;
 
@@ -55,7 +56,7 @@ class GeoLinks_Settings {
 			GeoLinks_Permalinks::set_flush_needed();
 
 			// We redirected to the same place to refresh permalinks
-			wp_redirect(site_url($redirect));
+			wp_redirect(admin_url($redirect));
 			exit();
 		}
 	}

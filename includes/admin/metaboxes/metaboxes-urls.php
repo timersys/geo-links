@@ -77,6 +77,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</td>
 
 					</tr>
+					<tr>
+						<th><label>&emsp;&emsp;&emsp;&emsp;<?php _e( 'ZipCodes', 'geol' ); ?></label></th>
+						<td>
+							<input type="text" class="widefat"
+							       name="geol[dest][<?php echo $key; ?>][zipcodes]"
+							       value="<?php echo isset($data['zipcodes']) ? esc_attr( $data['zipcodes'] ) : ''; ?>"
+							       placeholder="<?php _e( 'Zipcodes', 'geol' ); ?>"/>
+							<p class="help-text"><?php _e( 'Type zip codes separated by commas.', 'geol' ); ?></p>
+						</td>
+
+					</tr>
 
 					<tr valign="top">
 						<th><label for="geol_trigger"><?php _e( 'Device', 'geol' ); ?></label></th>

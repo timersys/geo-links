@@ -142,6 +142,11 @@ class Geol_Redirects {
 			return false;
 		}
 
+		// Zipcodes
+		if ( ! empty( $redirect['zipcodes'] ) && ! geot_target_zip( $redirect['zipcodes'] ) ) {
+			return false;
+		}
+
 		return true;
 	}
 

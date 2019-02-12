@@ -39,6 +39,7 @@ function geol_options( $id ) {
 						'countries'	=> array(),
 						'regions'	=> array(),
 						'states'	=> '',
+						'zipcodes'	=> '',
 						'cities'	=> '',
 						'device'	=> '',
 						'count_dest' => 0,
