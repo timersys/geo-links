@@ -20,8 +20,13 @@
 			</tr>
 
 			<tr>
-				<td><input type="submit" class="button-primary" value="<?php _e( 'Save settings', 'geol' ); ?>"/></td>
-				<?php wp_nonce_field( 'geol_save_settings', 'geol_nonce' ); ?>
+				<td>
+					<input type="hidden" name="geol_return"
+					       value="<?php echo $return; ?>" />
+					<input type="submit" class="button-primary" value="<?php _e( 'Save settings', 'geol' ); ?>" />
+					<?php wp_nonce_field( 'geol_save_settings', 'geol_nonce' ); ?>
+				</td>
+				
 		</table>
 	</form>
 </div>

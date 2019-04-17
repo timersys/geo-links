@@ -286,8 +286,9 @@ class Geolinks_Cpt {
 			foreach ( $opts['dest'] as $data ) {
 				$key                              = 'dest_' . $i;
 				$input['dest'][ $key ]['url']		= esc_url( $data['url'] );
-				$input['dest'][ $key ]['countries']	= is_array($data['countries']) ? array_map('esc_attr', $data['countries'] ) : [];
-				$input['dest'][ $key ]['regions']	= is_array($data['regions']) ? array_map('esc_attr', $data['regions'] ) : [];
+				$input['dest'][ $key ]['countries']	= isset($data['countries']) ? array_map('esc_attr', $data['countries'] ) : [];
+				$input['dest'][ $key ]['regions']	= isset($data['regions']) ? array_map('esc_attr', $data['regions'] ) : [];
+				$input['dest'][ $key ]['zipcodes']	= esc_attr( $data['zipcodes'] );
 				$input['dest'][ $key ]['states']	= esc_attr( $data['states'] );
 				$input['dest'][ $key ]['cities']	= esc_attr( $data['cities'] );
 				$input['dest'][ $key ]['device']	= esc_attr( $data['device'] );
