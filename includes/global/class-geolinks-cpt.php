@@ -215,6 +215,9 @@ class Geolinks_Cpt {
 		$countries 	= geot_countries();
 		$geowp 		= geot_settings();
 
+		update_option('kalex521', print_r($geowp,true));
+		update_option('kalex522', print_r($opts,true));
+
 		include GEOL_PLUGIN_DIR . '/includes/admin/metaboxes/metaboxes-urls.php';
 	}
 
@@ -291,6 +294,7 @@ class Geolinks_Cpt {
 				$input['dest'][ $key ]['zipcodes']	= esc_attr( $data['zipcodes'] );
 				$input['dest'][ $key ]['states']	= esc_attr( $data['states'] );
 				$input['dest'][ $key ]['cities']	= esc_attr( $data['cities'] );
+				$input['dest'][ $key ]['city_regions']	= isset($data['city_regions']) ? array_map('esc_attr', $data['city_regions'] ) : [];
 				$input['dest'][ $key ]['device']	= esc_attr( $data['device'] );
 				$input['dest'][ $key ]['ref']		= esc_url( $data['ref'] );
 
