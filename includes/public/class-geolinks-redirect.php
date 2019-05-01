@@ -70,13 +70,13 @@ class Geol_Redirects {
 
 					$this->count_click('dest', $post_id, $key);
 
-					wp_redirect( esc_url( $redirect['url'] ), $opts['status_code'] );
+					wp_redirect( esc_url_raw( $redirect['url'] ), $opts['status_code'] );
 					exit();
 				}
 			}
 
 			if( isset($opts['dest_default']) && !empty( $opts['dest_default'] ) )
-				$url_default = apply_filters('geol/redirect_default', esc_url( $opts['dest_default']), $post_id );
+				$url_default = apply_filters('geol/redirect_default', esc_url_raw( $opts['dest_default']), $post_id );
 			else
 				$url_default = site_url();
 
