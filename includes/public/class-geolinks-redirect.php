@@ -132,8 +132,8 @@ class Geol_Redirects {
 			return false;
 		}
 
-		// Cities
-		if ( ! empty( $redirect['cities'] ) && ! geot_target_city( $redirect['cities'] ) ) {
+		// Cities and city regions
+		if ( ! empty( $redirect['cities'] ) && ! geot_target_city( $redirect['cities'] ) && ! geot_target_city('', $redirect['cities'] ) ) {
 			return false;
 		}
 
