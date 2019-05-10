@@ -14,8 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<input type="text" id="source_slug" class="widefat" name="geol[source_slug]"
 			       value="<?php echo isset($opts['source_slug']) ? esc_attr($opts['source_slug']) : ''; ?>"/>
 			<span id="source_msg"></span>
-			<small>* <?php _e('Minimum length accepted: 3','geol'); ?></small>
-			<p class="help"><strong>URL:</strong> <?php echo site_url( $settings['goto_page'] ); ?>/<span><?php echo $opts['source_slug']; ?></span><br><strong>SHORTCODE:</strong> [geo-link slug="<span><?php echo $opts['source_slug']; ?></span>" nofollow="yes" noreferrer="no"]...[/geo-link]</p>
+			<small>* <?php _e('Minimum length accepted: 3','geol'); ?></small>			
+			<p class="help"><strong>URL:</strong> <?php echo ( $pagenow == 'post-new.php' ? get_post_permalink( $post->ID, false, true ) : dirname( get_post_permalink( $post->ID, false, true ) ).'/' ); ?><span><?php echo $opts['source_slug']; ?></span><br><strong>SHORTCODE:</strong> [geo-link slug="<span><?php echo $opts['source_slug']; ?></span>" nofollow="yes" noreferrer="no"]...[/geo-link]</p>
 		</td>
 	</tr>
 

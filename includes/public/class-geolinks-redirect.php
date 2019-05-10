@@ -231,7 +231,7 @@ class Geol_Redirects {
 
 
 			// Output
-			$link =  add_query_arg( 'nocache', 'true', trailingslashit( site_url( $settings['goto_page'] ) ) . $opts['source_slug'] );
+			$link =  add_query_arg( 'nocache', 'true', trailingslashit( get_permalink( $post->ID ) ) );
 
 			$return = '<a href="' . esc_url( $link ) . '" '. esc_attr( $attr_rel ) .' >' . do_shortcode($content) . '</a>';
 		}
