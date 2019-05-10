@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</td>
 					</tr>
 					<tr>
-						<th><label>&emsp;&emsp;&emsp;&emsp;<?php _e( 'Regions', 'geol' ); ?></label></th>
+						<th><label>&emsp;&emsp;&emsp;&emsp;<?php _e( 'Country Regions', 'geol' ); ?></label></th>
 						<td>
 							<select name="geol[dest][<?php echo $key; ?>][regions][]" class="geot-chosen-select-multiple geol_regions" placeholder="<?php _e( 'Choose one or more regions', 'geol' ); ?>" multiple="multiple">
 								<?php if( !empty( $geowp['region'] ) ) : ?>
@@ -62,10 +62,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<input type="text" class="widefat"
 							       name="geol[dest][<?php echo $key; ?>][cities]"
 							       value="<?php echo isset($data['cities']) ? esc_attr( $data['cities'] ) : ''; ?>"
-							       placeholder="<?php _e( 'Cities / Regions', 'geol' ); ?>"/>
-							<p class="help-text"><?php _e( 'Type city names or city regions, comma separated', 'geol' ); ?></p>
+							       placeholder="<?php _e( 'Cities', 'geol' ); ?>"/>
+							<p class="help-text"><?php _e( 'Type city names, comma separated', 'geol' ); ?></p>
 						</td>
 					</tr>
+
+
+					<tr>
+						<th><label>&emsp;&emsp;&emsp;&emsp;<?php _e( 'City Regions', 'geol' ); ?></label></th>
+						<td>
+							<select name="geol[dest][<?php echo $key; ?>][city_regions][]" class="geot-chosen-select-multiple geol_regions" placeholder="<?php _e( 'Choose one or more city regions', 'geol' ); ?>" multiple="multiple">
+								<?php if( !empty( $geowp['city_region'] ) ) : ?>
+									<?php foreach ( $geowp['city_region'] as $city_region ) : ?>
+
+									<option value="<?php echo $city_region['name']; ?>" <?php isset( $data['regions'] ) && is_array( $data['city_regions'] ) ? selected(true, in_array( $city_region['name'], $data['city_regions']) ) :''; ?>> <?php echo $city_region['name']; ?></option>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</select>
+							<p class="help-text" style="margin-top: -20px;"><?php echo sprintf( __( 'Choose one or more city regions. Edit regions in <a href="%s">here</a>', 'geol' ), admin_url('admin.php?page=geot-settings') ); ?></p>
+						</td>
+					</tr>
+					<tr>
+
+
 					<tr>
 						<th><label>&emsp;&emsp;&emsp;&emsp;<?php _e( 'States', 'geol' ); ?></label></th>
 						<td>

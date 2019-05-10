@@ -30,7 +30,6 @@ class Geol_Redirects {
 	 *
 	 * @since    1.0.0
 	 */
-
 	public function __construct() {
 		self::$detect = new Mobile_Detect;
 
@@ -134,6 +133,11 @@ class Geol_Redirects {
 
 		// Cities and city regions
 		if ( ! empty( $redirect['cities'] ) && ! geot_target_city( $redirect['cities'] ) && ! geot_target_city('', $redirect['cities'] ) ) {
+			return false;
+		}
+
+		// City regions
+		if ( ! empty( $redirect['city_regions'] ) && ! geot_target_city( '', $redirect['city_regions'] ) ) {
 			return false;
 		}
 
