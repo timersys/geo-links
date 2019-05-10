@@ -201,7 +201,8 @@ class Geolinks_Cpt {
 	 * @since 1.0.0
 	 */
 	public function geol_opts( $post, $metabox ) {
-
+		global $pagenow;
+		
 		$settings = geol_settings();
 		$opts     = geol_options( $post->ID );
 
