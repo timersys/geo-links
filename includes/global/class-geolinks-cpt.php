@@ -216,9 +216,6 @@ class Geolinks_Cpt {
 		$countries 	= geot_countries();
 		$geowp 		= geot_settings();
 
-		update_option('kalex521', print_r($geowp,true));
-		update_option('kalex522', print_r($opts,true));
-
 		include GEOL_PLUGIN_DIR . '/includes/admin/metaboxes/metaboxes-urls.php';
 	}
 
